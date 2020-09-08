@@ -13,9 +13,9 @@ async def on_ready():
 @client.command()
 async def help(ctx):
     mbed  = discord.Embed(
+        color = discord.Color(0xe3a2fc),
         title = 'TSUKI',
-        description = '***tsu!loop <channel> (partnership reminder), tsu!announce <channel> <message>, '
-        color = discord.Color(0xe3a2fc)
+        description = '***tsu!loop <channel> (partnership reminder), tsu!announce <channel> <message>***',
     )
     if ctx.author.guild_permissions.administrator:
         await ctx.send(embed = mbed)
