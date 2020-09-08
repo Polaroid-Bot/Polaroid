@@ -59,11 +59,15 @@ async def announce(ctx, channel:discord.TextChannel, *, message):
     if ctx.author.guild_permissions.administrator:
         await channel.send(embed=mbed)
 
-
-
-
-
-
+@client.event
+async def on_member_join(member):
+    channel = get(member.guild.channels, name = 'welcome') 
+    mbed = discord.Embed(
+        title = 'Welcome',
+        description = f'Hello {member.mention}, welcome to TSUKI!',
+        color = discord.Color(0xe3a2fc)
+    )
+    await channel.send(embed = mbed)
 
 
 client.run('NzMyNjU0NTgyMDg5NTE1MDA5.Xw3vwA.1csUvA74TVIT9bxvigUUXsQ5ET4')
