@@ -3,7 +3,7 @@ import discord
 from asyncio import sleep 
 from discord.utils import get
 import tracemalloc
-client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('flame!'), help_comamnd = None)
+client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!'), help_comamnd = None)
 
 @client.event
 async def on_ready():
@@ -11,16 +11,26 @@ async def on_ready():
     
 
 @client.command()
+async def help(ctx):
+    mbed  = discord.Embed(
+        title = 'TSUKI',
+        description = '***tsu!loop <channel> (partnership reminder), tsu!announce <channel> <message>, '
+        color = discord.Color(0xe3a2fc)
+    )
+    if ctx.author.guild_permissions.administrator:
+        await ctx.send(embed = mbed)
+
+@client.command()
 async def loop(ctx, channel: discord.TextChannel):
     mbed = discord.Embed(
         title = 'Success.',
-        color = discord.Color(0xffff),
-        description = f"{channel.mention} is now being flamed."
+        color = discord.Color(0xe3a2fc),
+        description = f"{channel.mention} has been set to partnership channel."
     )
     roleSelect = get(ctx.guild.channels, name = 'role-select')
     mbed2 = discord.Embed(
         title = 'Hello there!',
-        color = discord.Color(0xffff),
+        color = discord.Color(0xe3a2fc),
         description = f'Hello, if youre tired of getting notifications from this channel, go to {roleSelect.mention} and get the No Partnership Ping Role.'
     )
     if ctx.author.guild_permissions.administrator:
@@ -30,7 +40,30 @@ async def loop(ctx, channel: discord.TextChannel):
             await sleep(10800)
             await channel.send(embed=mbed2, delete_after=3600.0)
             await sleep(10800)
-            
+            await channel.send(embed=mbed2, delete_after=3600.0)
+            await sleep(10800)
+            await channel.send(embed=mbed2, delete_after=3600.0)
+            await sleep(10800)
+            await channel.send(embed=mbed2, delete_after=3600.0)
+            await sleep(10800)
+            await channel.send(embed=mbed2, delete_after=3600.0)
+            await sleep(10800)
+
+
+@client.command()
+async def announce(ctx, channel:discord.TextChannel, *, message):
+    mbed = discord.Embed(
+        description = f"{message}",
+        color = discord.Color(0xe3a2fc)
+    )
+    if ctx.author.guild_permissions.administrator:
+        await channel.send(embed=mbed)
+
+
+
+
+
+
 
 
 client.run('NzMyNjU0NTgyMDg5NTE1MDA5.Xw3vwA.1csUvA74TVIT9bxvigUUXsQ5ET4')
