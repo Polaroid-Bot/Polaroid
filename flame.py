@@ -11,7 +11,7 @@ async def on_ready():
     
 
 @client.command()
-async def help(ctx):
+async def info(ctx):
     mbed  = discord.Embed(
         color = discord.Color(0xe3a2fc),
         title = 'TSUKI',
