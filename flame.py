@@ -8,7 +8,7 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!
 @client.event
 async def on_ready():
     print(f'{client.user} has Awoken!')
-    
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{len(client.users)} in discord.gg/fxdChTx!'))
 
 @client.command()
 async def info(ctx):
