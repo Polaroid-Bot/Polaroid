@@ -3,7 +3,7 @@ import discord
 from asyncio import sleep 
 from discord.utils import get
 import tracemalloc
-client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!'), help_comamnd = None)
+client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!'), help_comamnd = None)
 
 @client.event
 async def on_ready():
@@ -14,8 +14,8 @@ async def on_ready():
 async def info(ctx):
     mbed  = discord.Embed(
         color = discord.Color(0xe3a2fc),
-        title = 'TSUKI',
-        description = '***tsu!loop <channel> (partnership reminder), tsu!announce <channel> <message>***',
+        title = 'Polaroid',
+        description = '***p!loop <channel> (partnership reminder), p!announce <channel> <message>***',
     )
     if ctx.author.guild_permissions.administrator:
         await ctx.send(embed = mbed)
