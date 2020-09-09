@@ -68,6 +68,7 @@ async def on_member_join(member):
         description = f'Hello {member.mention}, welcome to Polaroid, please head over to {channel2.mention} to verify yourself!',
         color = discord.Color(0xe3a2fc)
     )
+    mbed.set_image(url = 'https://cdn.discordapp.com/avatars/732654582089515009/8506972331cc82af0b5ef4d6f2dff59b.webp?size=1024')
     await channel.send(embed = mbed)
 
 
