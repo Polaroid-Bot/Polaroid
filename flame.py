@@ -62,9 +62,10 @@ async def announce(ctx, channel:discord.TextChannel, *, message):
 @client.event
 async def on_member_join(member):
     channel = get(member.guild.channels, name = 'welcome') 
+    channel2 = get(member.guild.channels, name = 'rules')
     mbed = discord.Embed(
         title = 'Welcome',
-        description = f'Hello {member.mention}, welcome to TSUKI!',
+        description = f'Hello {member.mention}, welcome to Polaroid, please head over to {channel2.mention} to verify yourself!',
         color = discord.Color(0xe3a2fc)
     )
     await channel.send(embed = mbed)
