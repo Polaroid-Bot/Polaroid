@@ -9,14 +9,14 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!
 @client.event
 async def on_ready():
     print(f'{client.user} has Awoken!')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{len(client.users)} in discord.gg/fxdChTx!'))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{len(client.users)} users in discord.gg/fxdChTx!'))
 
 @client.command()
 async def info(ctx):
     mbed  = discord.Embed(
         color = discord.Color(0xe3a2fc),
-        title = 'TSUKI',
-        description = '***tsu!loop <channel> (partnership reminder), tsu!announce <channel> <message>***',
+        title = 'Polaroid',
+        description = '***p!loop <channel> (partnership reminder), p!announce <channel> <message>***',
     )
     if ctx.author.guild_permissions.administrator:
         await ctx.send(embed = mbed)
@@ -63,11 +63,13 @@ async def announce(ctx, channel:discord.TextChannel, *, message):
 @client.event
 async def on_member_join(member):
     channel = get(member.guild.channels, name = 'welcome') 
+    channel2 = get(member.guild.channels, name = 'rules')
     mbed = discord.Embed(
         title = 'Welcome',
-        description = f'Hello {member.mention}, welcome to TSUKI!',
+        description = f'Hello {member.mention}, welcome to Polaroid! Please head over to {channel2.mention} to verify yourself.',
         color = discord.Color(0xe3a2fc)
     )
+    mbed.set_image(url = 'https://cdn.discordapp.com/avatars/732654582089515009/8506972331cc82af0b5ef4d6f2dff59b.webp?size=1024')
     await channel.send(embed = mbed)
 
 
