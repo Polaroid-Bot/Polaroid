@@ -38,17 +38,7 @@ async def loop(ctx, channel: discord.TextChannel):
         await ctx.send(embed=mbed)
         while True:
             await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
-            await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
-            await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
-            await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
-            await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
-            await channel.send(embed=mbed2, delete_after=3600.0)
-            await sleep(10800)
+            await sleep(60*600)
 
 
 @client.command()
