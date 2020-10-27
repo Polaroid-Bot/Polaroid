@@ -3,7 +3,8 @@ import discord
 from asyncio import sleep 
 from discord.utils import get
 import tracemalloc
-client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!'), help_comamnd = None)
+intents = discord.Intents.all()
+client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('tsu!'), help_comamnd = None, intents = intents)
 
 @client.event
 async def on_ready():
