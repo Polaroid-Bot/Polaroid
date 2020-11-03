@@ -10,7 +10,7 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!')
 async def on_ready():
     print(f'{client.user} has Awoken!')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=f'{len(client.users)} users in discord.gg/fxdChTx!'))
-#
+
 @client.command()
 async def info(ctx):
     mbed  = discord.Embed(
