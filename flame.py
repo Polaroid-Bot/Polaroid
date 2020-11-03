@@ -10,7 +10,7 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!')
 async def on_ready():
     print(f'{client.user} has Awoken!')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=f'{len(client.users)} users in discord.gg/fxdChTx!'))
-
+#
 @client.command()
 async def info(ctx):
     mbed  = discord.Embed(
@@ -61,6 +61,22 @@ async def on_member_join(member):
     )
     mbed.set_image(url = 'https://cdn.discordapp.com/avatars/732654582089515009/8506972331cc82af0b5ef4d6f2dff59b.webp?size=1024')
     await channel.send(embed = mbed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 client.run('NzMyNjU0NTgyMDg5NTE1MDA5.Xw3vwA.1csUvA74TVIT9bxvigUUXsQ5ET4')
