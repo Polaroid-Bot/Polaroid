@@ -9,14 +9,14 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!')
 @client.event
 async def on_ready():
     print(f'{client.user} has Awoken!')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=f'{len(client.users)} users in discord.gg/fxdChTx!'))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=f'{len(client.users)} users in discord.gg/fxdChTx!', url='https://twitch.tv/clvrkq))
 
 @client.command()
 async def info(ctx):
     mbed  = discord.Embed(
         color = discord.Color(0xe3a2fc),
         title = 'Polaroid',
-        description = '***p!loop <channel> (partnership reminder), p!announce <channel> <message>***',
+        description = '***p!announce <channel> <message>***',
     )
     if ctx.author.guild_permissions.administrator:
         await ctx.send(embed = mbed)
