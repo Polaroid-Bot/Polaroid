@@ -29,11 +29,9 @@ class supportserver(commands.Cog):
                 await channel.send(msg)
                 await ctx.send(f'Successfully sent {msg} to {channel.mention}.')
 
-    @commands.command()
+    @commands.command(aliases=['s'])
     async def stats(self, ctx):
         if ctx.guild.id == 687177202823069697:
-            @commands.command(pass_context=True)
-    async def ping(self, ctx):
         before = time.monotonic()
         message = await ctx.send('Pinging...')
         ping = (time.monotonic() - before) * 1000
