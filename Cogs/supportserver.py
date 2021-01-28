@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
+import random
 
+colors = [0xe3a2fc, 0x0da2ff]
 
 class supportserver(commands.Cog):
     def __init__(self, bot):
@@ -26,6 +28,30 @@ class supportserver(commands.Cog):
             if ctx.author.guild_permissions.administrator:
                 await channel.send(msg)
                 await ctx.send(f'Successfully sent {msg} to {channel.mention}.')
+
+    @commands.command()
+    async def stats(self, ctx):
+        if ctx.guild.id == 687177202823069697:
+            @commands.command(pass_context=True)
+    async def ping(self, ctx):
+        before = time.monotonic()
+        message = await ctx.send('Pinging...')
+        ping = (time.monotonic() - before) * 1000
+        if ping < 200:
+            color = 0x35fc03
+        elif ping < 350:
+            color = 0xe3f51d
+        elif ping < 500:
+            color = 0xf7700f
+        else:
+            color = 0xf7220f
+        pEmbed = discord.Embed(title="Stats.", color=color)
+        pEmbed.add_field(name="Latency", value=f'{int(ping)}ms')
+        pEmbed.set_author(name=f'{ctx.guild.member_count}', icon=ctx.guild.icon_url)
+        pEmbed.add_field(name="API", value=f'{round(self.bot.latency * 1000)}ms')
+        pEmbed.set_thumbnail(url=self.bot.user.avatar_url)
+        await message.edit(content=None, embed=pEmbed)
+            await ctx.send(embed=mbed)
 
 def setup(bot):
     bot.add_cog(supportserver(bot))
