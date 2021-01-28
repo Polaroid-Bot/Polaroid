@@ -1,1 +1,1 @@
-worker: python ./flame.py
+worker: python ./main.py
