@@ -23,8 +23,9 @@ class supportserver(commands.Cog):
     @commands.command(aliases=['a'])
     async def announce(ctx, channel: discord.TextChannel, *, msg: str):
         if ctx.guild.id == 687177202823069697:
-            await channel.send(msg)
-            await ctx.send(f'Successfully sent {msg} to {channel.mention}.')
+            if ctx.author.guild_permissions.administrator:
+                await channel.send(msg)
+                await ctx.send(f'Successfully sent {msg} to {channel.mention}.')
 
 def setup(bot):
     bot.add_cog(supportserver(bot))

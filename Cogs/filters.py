@@ -26,5 +26,6 @@ class filters(commands.Cog):
         os.remove("blur.png")
 
 
+
 def setup(bot):
     bot.add_cog(filters(bot))
