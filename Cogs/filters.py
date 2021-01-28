@@ -13,7 +13,7 @@ class filters(commands.Cog):
     @commands.command()
     @commands.cooldown(rate=1, per=2, type=BucketType.user)
     async def blur(self, ctx, url: str):
-        
+        awai ctx.send("Not done")
 
 
 def setup(bot):
