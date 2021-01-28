@@ -49,7 +49,7 @@ class supportserver(commands.Cog):
                     color = 0xf7700f
                 else:
                     color = 0xf7220f
-                pEmbed = discord.Embed(title="Member Count: {ctx.guild.member_count}", color=color)
+                pEmbed = discord.Embed(title=f"Member Count: {ctx.guild.member_count}", color=color)
                 pEmbed.add_field(name="Latency", value=f'{int(ping)}ms')
                 pEmbed.set_author(name=f'Polaroid Stats', icon_url=ctx.guild.icon_url)
                 pEmbed.add_field(name="API", value=f'{round(self.bot.latency * 1000)}ms')
