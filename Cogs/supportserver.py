@@ -56,7 +56,6 @@ class supportserver(commands.Cog):
                 pEmbed.add_field(name="Uptime", value=f"Taking photos for {days}d, {hours}h, {minutes}m")
                 pEmbed.set_thumbnail(url=self.bot.user.avatar_url)
                 await message.edit(content=None, embed=pEmbed)
-                await ctx.send(embed=mbed)
 
 def setup(bot):
     bot.add_cog(supportserver(bot))
