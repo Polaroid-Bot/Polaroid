@@ -8,7 +8,7 @@ class supportserver(commands.Cog):
 
 
     @commands.Cog.listener()
-    async def on_member_join(member):
+    async def on_member_join(self, member):
         if member.guild.id == 687177202823069697:
             channel = get(member.guild.channels, name='welcome')
             channel2 = get(member.guild.channels, name='rules')
@@ -21,7 +21,7 @@ class supportserver(commands.Cog):
             await channel.send(embed = mbed)
 
     @commands.command(aliases=['a'])
-    async def announce(ctx, channel: discord.TextChannel, *, msg: str):
+    async def announce(self, ctx, channel: discord.TextChannel, *, msg: str):
         if ctx.guild.id == 687177202823069697:
             if ctx.author.guild_permissions.administrator:
                 await channel.send(msg)
