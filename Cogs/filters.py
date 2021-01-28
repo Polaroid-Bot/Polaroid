@@ -5,7 +5,6 @@ from PIL import Image
 from discord.ext.commands import BucketType
 from io import BytesIO
 import requests
-import numpy as np
 
 class filters(commands.Cog):
     def __init__(self, bot):
