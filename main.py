@@ -8,6 +8,7 @@ from discord.utils import get
 
 load_dotenv()
 
+
 token = os.getenv("TOKEN")
 intents = discord.Intents.all()
 client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!'), help_command=None, intents=intents, case_insensitive=True)
@@ -17,8 +18,7 @@ client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p!')
 async def on_ready():
     print(f'{client.user} has Awoken!')
     await client.wait_until_ready()
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'dsc.gg/polaroid! | p!help'))
-
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'dsc.gg/plrd | p!help'))
 
 
 extensions = ['Cogs.supportserver', 'Cogs.filters']
