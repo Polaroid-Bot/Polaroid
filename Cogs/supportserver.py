@@ -3,6 +3,7 @@ from discord.ext import commands
 import random
 import time
 from datetime import datetime
+from discord.utils import get
 
 colors = [0xe3a2fc, 0x0da2ff]
 
