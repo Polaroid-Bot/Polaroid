@@ -3,6 +3,7 @@ from discord.ext import commands
 import random
 import time
 from datetime import datetime
+
 colors = [0xe3a2fc, 0x0da2ff]
 
 class supportserver(commands.Cog):
@@ -56,6 +57,7 @@ class supportserver(commands.Cog):
                 pEmbed.add_field(name="Uptime", value=f"Taking photos for {days}d, {hours}h, {minutes}m")
                 pEmbed.set_thumbnail(url=self.bot.user.avatar_url)
                 await message.edit(content=None, embed=pEmbed)
+
 
 def setup(bot):
     bot.add_cog(supportserver(bot))
