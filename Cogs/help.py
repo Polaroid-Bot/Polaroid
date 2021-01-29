@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
 import random
+from discord.ext.commands import BucketType
 
 err_color = discord.Color.red()
 colors = [0xe3a2fc, 0x0da2ff]
@@ -10,18 +11,18 @@ class help(commands.Cog):
         self.bot = bot
 
     @commands.group(aliases=['h', 'info'])
-	@commands.cooldown(rate=2, per=3, type=BucketType.user)
-	async def help(self, ctx):
-		mbed = discord.Embed(
-			title='Commands | p! or @mention',
-			description='Enjoy my list of image related commands. <:camera:804427554688598038>',
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def help(self, ctx):
+        mbed = discord.Embed(
+            title='Commands | p! or @mention',
+            description='Enjoy my list of image related commands. <:camera:804427554688598038>',
             color=random.choice(colors)
-		)
-		mbed.add_field(name='Manipulation', value='> `blur <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
-		await ctx.send(embed=mbed)
+        )
+        mbed.add_field(name='Manipulation', value='> `blur <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
+        await ctx.send(embed=mbed)
 
     @help.error
-    async def blur_error(self, ctx, error):
+    async def hlp_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
                 title='Hold on there, buddy',

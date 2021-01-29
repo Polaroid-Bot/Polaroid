@@ -14,40 +14,14 @@ colors = [0xe3a2fc, 0x0da2ff]
 class filters(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.afn.client = alexflipnote.Client("YOUR-API-TOKEN")
+
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def blur(self, ctx, url: str):
-        if url is not discord.User:
-            http = 'https://', 'http://'
-            if url.startswith(http):
-                response = requests.get(url)
-                img = Image.open(BytesIO(response.content), mode='r')
-                try:
-                    img.seek(1)
-                except EOFError:
-                    isanimated = False
-                else:
-                    isanimated = True
-
-                if isanimated == True:
-                    await ctx.send(embed=discord.Embed(description='Animated Pictures are currently not supported for the blur filter!', color=random.choice(colors)))
-
-                elif isanimated == False:
-                    response = requests.get(url)
-                    img = Image.open(BytesIO(response.content), mode='r')
-                    im = img.filter(ImageFilter.BLUR)
-                    b = BytesIO()
-                    im.save(b, format='PNG')
-                    byte_im = b.getvalue()
-                    with open('blur.png','wb')as img:
-                        img.write(byte_im)
-                        await ctx.send(file=discord.File("blur.png"))
-                    os.remove("blur.png")
-
-        elif url == discord.User:
-            response = requests.get(url.avatar_url)
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            response = requests.get(url)
             img = Image.open(BytesIO(response.content), mode='r')
             try:
                 img.seek(1)
@@ -57,7 +31,7 @@ class filters(commands.Cog):
                 isanimated = True
 
             if isanimated == True:
-                await ctx.send(embed=discord.Embed(description='Animated Pictures are currently not supported for blur filter!', color=random.choice(colors)))
+                await ctx.send(embed=discord.Embed(description='Animated Pictures are currently not supported for the blur filter!', color=random.choice(colors)))
 
             elif isanimated == False:
                 response = requests.get(url)
@@ -74,46 +48,28 @@ class filters(commands.Cog):
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def rainbow(self, ctx, url: str):
-        if url is not discord.User:
-            http = 'https://', 'http://'
-            if url.startswith(http):
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=random.choice(colors)
-                )
-                mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
-                await ctx.send(embed=mbed)
-
-        elif url == discord.User:
+        http = 'https://', 'http://'
+        if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
                 color=random.choice(colors)
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url.avatar_url}")
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
             await ctx.send(embed=mbed)
 
-        @commands.command(aliases=['in'])
-        @commands.cooldown(rate=2, per=3, type=BucketType.user)
-        async def invert(self, ctx, url: str):
-            if url is not discord.User:
-                http = 'https://', 'http://'
-                if url.startswith(http):
-                    mbed = discord.Embed(
-                        title='Snap!',
-                        color=random.choice(colors)
-                    )
-                    mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
-                    await ctx.send(embed=mbed)
+    @commands.command(aliases=['in'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def invert(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
+            await ctx.send(embed=mbed)
 
-            elif url == discord.User:
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=random.choice(colors)
-                )
-                mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url.avatar_url}")
-                await ctx.send(embed=mbed)
-
-    @rainbow.error
+    @invert.error
     async def rb_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
@@ -129,7 +85,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!in <image link/user>')
+            mbed.set_footer(text='Orthodoxed Syntax: p!in <image link>')
             await ctx.send(embed=mbed)
 
     @rainbow.error
@@ -148,7 +104,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!rb <image link/user>')
+            mbed.set_footer(text='Orthodoxed Syntax: p!rb <image link>')
             await ctx.send(embed=mbed)
 
     @blur.error
@@ -172,7 +128,7 @@ class filters(commands.Cog):
                 isanimated = True
 
             if isanimated == True:
-                await ctx.send(embed=discord.Embed(color=err_color, description='Your pfp may be a gif! You may also use p!blur <link/user>'))
+                await ctx.send(embed=discord.Embed(color=err_color, description='Your pfp may be a gif! You may also use p!blur <image link>'))
 
             elif isanimated == False:
                 response = requests.get(ctx.author.avatar_url)
