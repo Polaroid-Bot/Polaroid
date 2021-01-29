@@ -8,7 +8,8 @@ from discord.ext.commands import BucketType
 from io import BytesIO
 import requests
 import random
-import alexflipnote
+
+
 err_color = discord.Color.red()
 colors = [0xe3a2fc, 0x0da2ff]
 
@@ -79,9 +80,104 @@ class filters(commands.Cog):
             mbed.set_footer(text='Invert Filter')
             await ctx.send(embed=mbed)
 
+    @commands.command(aliases=['gryscl'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def greyscale(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
+            mbed.set_footer(text='Greyscale Filter')
+            await ctx.send(embed=mbed)
+
+    @commands.command(aliases=['sep'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def sepia(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={url}")
+            mbed.set_footer(text='Sepia Filter')
+            await ctx.send(embed=mbed)
+
+    @commands.command()
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def glass(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={url}")
+            mbed.set_footer(text='Glass Filter')
+            await ctx.send(embed=mbed)
+
+    @glass.error
+    async def glass_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={ctx.author.avatar_url}")
+            mbed.set_footer(text='Orthodoxed Syntax: p!glass <image link>')
+            await ctx.send(embed=mbed)
+
+    @sepia.error
+    async def sep_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
+            mbed.set_footer(text='Orthodoxed Syntax: p!sepia <image link>')
+            await ctx.send(embed=mbed)
+
+    @greyscale.error
+    async def gryscl_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
+            mbed.set_footer(text='Orthodoxed Syntax: p!gryscl <image link>')
+            await ctx.send(embed=mbed)
 
     @invert.error
-    async def rb_error(self, ctx, error):
+    async def in_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
                 title='Hold on there, buddy',
