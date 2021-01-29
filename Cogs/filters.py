@@ -3,18 +3,18 @@ import discord
 from discord.ext import commands
 from PIL import ImageFilter
 from PIL import Image
+from PIL import ImageOps
 from discord.ext.commands import BucketType
 from io import BytesIO
 import requests
 import random
-
+import alexflipnote
 err_color = discord.Color.red()
 colors = [0xe3a2fc, 0x0da2ff]
 
 class filters(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -40,9 +40,16 @@ class filters(commands.Cog):
                 b = BytesIO()
                 im.save(b, format='PNG')
                 byte_im = b.getvalue()
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=random.choice(colors)
+                )
+                mbed.set_image(url='attachment://blur.png')
+                mbed.set_footer(text='Blur Filter')
                 with open('blur.png','wb')as img:
                     img.write(byte_im)
-                    await ctx.send(file=discord.File("blur.png"))
+                    file = discord.File("blur.png")
+                    await ctx.send(embed=mbed, file=file)
                 os.remove("blur.png")
 
     @commands.command(aliases=['rb'])
@@ -55,7 +62,9 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
+            mbed.set_footer(text='Rainbow Filter')
             await ctx.send(embed=mbed)
+
 
     @commands.command(aliases=['in'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -67,7 +76,9 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
+            mbed.set_footer(text='Invert Filter')
             await ctx.send(embed=mbed)
+
 
     @invert.error
     async def rb_error(self, ctx, error):
