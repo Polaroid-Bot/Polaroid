@@ -35,8 +35,6 @@ class filters(commands.Cog):
                 await ctx.send(embed=discord.Embed(description='Animated Pictures are currently not supported for the blur filter!', color=random.choice(colors)))
 
             elif isanimated == False:
-                response = requests.get(url)
-                img = Image.open(BytesIO(response.content), mode='r')
                 im = img.filter(ImageFilter.BLUR)
                 b = BytesIO()
                 im.save(b, format='PNG')
