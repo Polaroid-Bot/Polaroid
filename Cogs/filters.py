@@ -236,8 +236,6 @@ class filters(commands.Cog):
                 await ctx.send(embed=discord.Embed(color=err_color, description='Your pfp may be a gif! You may also use p!blur <image link>'))
 
             elif isanimated == False:
-                response = requests.get(ctx.author.avatar_url)
-                img = Image.open(BytesIO(response.content), mode='r')
                 im = img.filter(ImageFilter.BLUR)
                 b = BytesIO()
                 im.save(b, format='PNG')
