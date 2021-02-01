@@ -38,7 +38,7 @@ class extrautils(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.url = f'{ctx.author.avatar_url}'
-            mbed.set_author(name=f'{ctx.author.name} | Requested by {ctx.author.mention}', icon_url=f'{user.avatar_url}')
+            mbed.set_author(name=f'{ctx.author.name} | Requested by {ctx.author.mention}', icon_url=f'{ctx.author.avatar_url}')
             mbed.set_image(url=f"{ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!av <image link>')
             await ctx.send(embed=mbed)
