@@ -18,8 +18,10 @@ class help(commands.Cog):
             description='Enjoy my list of image related commands. <:camera:804427554688598038>',
             color=random.choice(colors)
         )
-        mbed.add_field(name='Manipulation', value='> `p!greyscale <image link>`\n`p!sepia <image link>`\n`blur <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
+        mbed.add_field(name='Filters', value='> `p!avatar <image link>`\n> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blur <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
+        mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`')
         await ctx.send(embed=mbed)
+
 
     @help.error
     async def hlp_error(self, ctx, error):

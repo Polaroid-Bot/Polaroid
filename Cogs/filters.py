@@ -154,7 +154,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!sepia <image link>')
+            mbed.set_footer(text='Syntax: p!sepia <image link>')
             await ctx.send(embed=mbed)
 
     @greyscale.error
@@ -173,7 +173,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!gryscl <image link>')
+            mbed.set_footer(text='Syntax: p!gryscl <image link>')
             await ctx.send(embed=mbed)
 
     @invert.error
@@ -192,7 +192,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!in <image link>')
+            mbed.set_footer(text='Syntax: p!in <image link>')
             await ctx.send(embed=mbed)
 
     @rainbow.error
@@ -211,7 +211,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!rb <image link>')
+            mbed.set_footer(text='Syntax: p!rb <image link>')
             await ctx.send(embed=mbed)
 
     @blur.error
