@@ -14,7 +14,7 @@ class extrautils(commands.Cog):
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def avatar(self, ctx, user: discord.User):
         mbed = discord.Embed(
-            title=f"{user}'s avatar",
+            title=f"Link",
             color=random.choice(colors)
         )
         mbed.set_author(name=f'{user.name} | Requested by {ctx.author}', icon_url=f'{user.avatar_url}')
@@ -34,7 +34,7 @@ class extrautils(commands.Cog):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
-                title=f"{ctx.author}'s avatar",
+                title=f"Link",
                 color=random.choice(colors)
             )
             mbed.url = f'{ctx.author.avatar_url}'
