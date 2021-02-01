@@ -20,7 +20,52 @@ class manipulation(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
-            mbed.set_footer(text='Wasted')
+            mbed.set_footer(text='Wasted | Requested By {ctx.author}')
+            await ctx.send(embed=mbed)
+
+    @commands.command(aliases=['bright'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def brighten(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
+            mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
+            await ctx.send(embed=mbed)
+            
+    @commands.command(aliases=['bright'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def brighten(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
+            mbed.set_footer(text=f'100% Brightened | Requested By {ctx.author}')
+            await ctx.send(embed=mbed)
+
+    @brighten.error
+    async def bright_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=random.choice(colors)
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={ctx.author.avatar_url}")
+            mbed.set_footer(text=f'Syntax: p!brighten <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
     @wasted.error
@@ -39,7 +84,7 @@ class manipulation(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Syntax: p!wasted <image link>')
+            mbed.set_footer(text=f'Syntax: p!wasted <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
 

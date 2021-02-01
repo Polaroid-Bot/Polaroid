@@ -19,7 +19,7 @@ class help(commands.Cog):
             color=random.choice(colors)
         )
         mbed.add_field(name='Filters', value='> `p!avatar <image link>`\n> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blur <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
-        mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`')
+        mbed.add_field(name='Manipulation', value='> `brighten <image>`\n> `p!wasted <image link>`')
         await ctx.send(embed=mbed)
 
 

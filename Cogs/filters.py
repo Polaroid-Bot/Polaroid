@@ -44,7 +44,7 @@ class filters(commands.Cog):
                     color=random.choice(colors)
                 )
                 mbed.set_image(url='attachment://blur.png')
-                mbed.set_footer(text='Blur Filter')
+                mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
                 with open('blur.png','wb')as img:
                     img.write(byte_im)
                     file = discord.File("blur.png")
@@ -61,7 +61,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
-            mbed.set_footer(text='Rainbow Filter')
+            mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
 
@@ -75,7 +75,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
-            mbed.set_footer(text='Invert Filter')
+            mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @commands.command(aliases=['gryscl'])
@@ -88,7 +88,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
-            mbed.set_footer(text='Greyscale Filter')
+            mbed.set_footer(text=f'Greyscale Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @commands.command(aliases=['sep'])
@@ -101,7 +101,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={url}")
-            mbed.set_footer(text='Sepia Filter')
+            mbed.set_footer(text=f'Sepia Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @commands.command()
@@ -114,7 +114,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={url}")
-            mbed.set_footer(text='Glass Filter')
+            mbed.set_footer(text=f'Glass Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @glass.error
@@ -133,7 +133,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Orthodoxed Syntax: p!glass <image link>')
+            mbed.set_footer(text=f'Orthodoxed Syntax: p!glass <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @sepia.error
@@ -152,7 +152,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Syntax: p!sepia <image link>')
+            mbed.set_footer(text=f'Syntax: p!sepia <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @greyscale.error
@@ -171,7 +171,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Syntax: p!gryscl <image link>')
+            mbed.set_footer(text=f'Syntax: p!gryscl <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @invert.error
@@ -190,7 +190,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Syntax: p!in <image link>')
+            mbed.set_footer(text=f'Syntax: p!in <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @rainbow.error
@@ -209,7 +209,7 @@ class filters(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text='Syntax: p!rb <image link>')
+            mbed.set_footer(text=f'Syntax: p!rb <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
     @blur.error
@@ -242,7 +242,14 @@ class filters(commands.Cog):
                 byte_im = b.getvalue()
                 with open('blur.png','wb')as img:
                     img.write(byte_im)
-                    await ctx.send(file=discord.File("blur.png"))
+                    file = discord.File("blur.png")
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=random.choice(colors)
+                    )
+                    mbed.set_image(url='attachment://blur.png')
+                    mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed, file=file)
                 os.remove("blur.png")
 
 
