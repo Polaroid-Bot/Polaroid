@@ -13,16 +13,29 @@ class manipulation(commands.Cog):
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def wasted(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=random.choice(colors)
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
-            mbed.set_footer(text=f'Wasted | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
+    async def wasted(self, ctx, url: discord.User):
+        if url != None:
+            url2 = url.avatar_url
+            if url2.startswith('https://cdn.discordapp.com/avatars/'):
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url2}")
+                mbed.set_footer(text=f'Wasted | Requested By {ctx.author}')
+                await ctx.send(embed=mbed)
+            else:
+                http = 'https://', 'http://'
+                if url.startswith(http):
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
+                    mbed.set_footer(text=f'Wasted | Requested By {ctx.author}')
+                    await ctx.send(embed=mbed)
+        elif url == None:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722:> I do not take {url}', color=color))
 
 
     @wasted.error
@@ -38,7 +51,7 @@ class manipulation(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=color
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!wasted <image link> | Requested By {ctx.author}')
