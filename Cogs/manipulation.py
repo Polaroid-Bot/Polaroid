@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord
 import random
 from discord.ext.commands import BucketType
+import aiohttp
 
 err_color = discord.Color.red()
 color = 0x0da2ff
@@ -22,25 +23,6 @@ class manipulation(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
             mbed.set_footer(text=f'Wasted | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
-
-    @commands.command()
-    async def deepfry(self, ctx, url: str):
-        async with aiohttp.ClientSession() as ses:
-            async with ses.get(f'https://nekobot.xyz/api/imagegen?type=deepfry&image={url}') as r:
-                if r.status in range(200, 299):
-                    data = await r.json()
-                    url = data['message']
-                    mbed = discord.Embed(
-                        title='Snap',
-                        color=color
-                    )
-                    mbed.set_image(url=url)
-                    mbed.set_footer(text=f'Deepfry | Requested By {ctx.author}')
-                    await ctx.send(embed=mbed)
-                    await ses.close()
-                else:
-                    await ctx.send(discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
-                    await ses.close()
 
 
     @wasted.error

@@ -20,19 +20,21 @@ class filters(commands.Cog):
     @commands.command(aliases=['blurpify', 'blurple'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def blurp(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
-            async with aiohttp.ClientSession() as ses:
-                endpoint = f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}'
-                async with ses.get(endpoint) as r:
+        async with aiohttp.ClientSession() as ses:
+            async with ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}') as r:
+                if r.status in range(200, 299):
                     data = await r.json()
+                    url = data['message']
                     mbed = discord.Embed(
-                        title='Snap!',
-                        color=0x7289da
+                        title='Snap',
+                        color=color
                     )
-                    mbed.set_image(url=data['message'])
-                    mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
+                    mbed.set_image(url=url)
+                    mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                     await ctx.send(embed=mbed)
+                    await ses.close()
+                else:
+                    await ctx.send(embed=discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
                     await ses.close()
 
     @commands.command(aliases=['rb'])
@@ -113,6 +115,26 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
             mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
+
+    @commands.command(aliases=['df'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def deepfry(self, ctx, url: str):
+        async with aiohttp.ClientSession() as ses:
+            async with ses.get(f'https://nekobot.xyz/api/imagegen?type=deepfry&image={url}') as r:
+                if r.status in range(200, 299):
+                    data = await r.json()
+                    url = data['message']
+                    mbed = discord.Embed(
+                        title='Snap',
+                        color=0xff6700
+                    )
+                    mbed.set_image(url=url)
+                    mbed.set_footer(text=f'Deepfry | Requested By {ctx.author}')
+                    await ctx.send(embed=mbed)
+                    await ses.close()
+                else:
+                    await ctx.send(embed=discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
+                    await ses.close()
 
     @brighten.error
     async def bright_error(self, ctx, error):
@@ -228,6 +250,7 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Syntax: p!rb <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
+
     @blurp.error
     async def blurp_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -240,16 +263,48 @@ class filters(commands.Cog):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             async with aiohttp.ClientSession() as ses:
-                async with ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
-                    data = await r.json()
-                    mbed = discord.Embed(
-                        title='Snap!',
-                        color=0x7289da
-                    )
-                    mbed.set_image(url=data['message'])
-                    mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
-                    await ctx.send(embed=mbed)
-                    await ses.close()
+                async with ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}') as r:
+                    if r.status in range(200, 299):
+                        data = await r.json()
+                        url = data['message']
+                        mbed = discord.Embed(
+                            title='Snap',
+                            color=color
+                        )
+                        mbed.set_image(url=url)
+                        mbed.set_footer(text=f'blurpify | Requested By {ctx.author}')
+                        await ctx.send(embed=mbed)
+                        await ses.close()
+                    else:
+                        await ctx.send(embed=discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
+                        await ses.close()
+    @deepfry.error
+    async def df_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            async with aiohttp.ClientSession() as ses:
+                async with ses.get(f'https://nekobot.xyz/api/imagegen?type=deepfry&image={url}') as r:
+                    if r.status in range(200, 299):
+                        data = await r.json()
+                        url = data['message']
+                        mbed = discord.Embed(
+                            title='Snap',
+                            color=color
+                        )
+                        mbed.set_image(url=url)
+                        mbed.set_footer(text=f'Deepfry | Requested By {ctx.author}')
+                        await ctx.send(embed=mbed)
+                        await ses.close()
+                    else:
+                        await ctx.send(embed=discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
+                        await ses.close()
 
 
 def setup(bot):
