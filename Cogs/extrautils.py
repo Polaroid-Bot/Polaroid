@@ -14,10 +14,10 @@ class extrautils(commands.Cog):
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def avatar(self, ctx, user: discord.User):
         mbed = discord.Embed(
-            title=f"{user}'s avatar",
+            title=f"Link",
             color=random.choice(colors)
         )
-        mbed.set_author(name=f'{user.name} | Requested by {ctx.author.mention}', icon_url=f'{user.avatar_url}')
+        mbed.set_author(name=f'{user.name} | Requested by {ctx.author}', icon_url=f'{user.avatar_url}')
         mbed.url = f'{user.avatar_url}'
         mbed.set_image(url=f"{user.avatar_url}")
         await ctx.send(embed=mbed)
@@ -34,11 +34,11 @@ class extrautils(commands.Cog):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
-                title=f"{ctx.author}'s avatar",
+                title=f"Link",
                 color=random.choice(colors)
             )
             mbed.url = f'{ctx.author.avatar_url}'
-            mbed.set_author(name=f'{ctx.author.name} | Requested by {ctx.author.mention}', icon_url=f'{user.avatar_url}')
+            mbed.set_author(name=f'{ctx.author.name} | Requested by {ctx.author}', icon_url=f'{ctx.author.avatar_url}')
             mbed.set_image(url=f"{ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!av <image link>')
             await ctx.send(embed=mbed)
