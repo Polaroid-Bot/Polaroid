@@ -23,7 +23,8 @@ class filters(commands.Cog):
         http = 'https://', 'http://'
         if url.startswith(http):
             async with aiohttp.ClientSession as ses:
-                async with ses.get(f'https://nekobot.xyz/apu/imagegen?type=blurpify&image={url}') as r:
+                endpoint = f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}'
+                async with ses.get(endpoint) as r:
                     data = await r.json()
                     mbed = discord.Embed(
                         title='Snap!',
@@ -207,7 +208,7 @@ class filters(commands.Cog):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             async with aiohttp.ClientSession as ses:
-                async with ses.get(f'https://nekobot.xyz/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
+                async with ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
                     data = await r.json()
                     mbed = discord.Embed(
                         title='Snap!',
