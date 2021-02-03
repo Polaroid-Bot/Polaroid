@@ -22,7 +22,7 @@ class filters(commands.Cog):
     async def blurp(self, ctx, url: str):
         http = 'https://', 'http://'
         if url.startswith(http):
-            async with aiohttp.ClientSession as ses:
+            async with aiohttp.ClientSession() as ses:
                 endpoint = f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}'
                 async with ses.get(endpoint) as r:
                     data = await r.json()
