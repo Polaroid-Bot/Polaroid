@@ -6,7 +6,7 @@ from PIL import Image
 from PIL import ImageOps
 from discord.ext.commands import BucketType
 from io import BytesIO
-import requests
+import aiohttp
 import random
 
 
@@ -17,39 +17,22 @@ class filters(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['blurpify', 'blurple'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def blur(self, ctx, url: str):
+    async def blurp(self, ctx, url: str):
         http = 'https://', 'http://'
         if url.startswith(http):
-            response = requests.get(url)
-            img = Image.open(BytesIO(response.content), mode='r')
-            try:
-                img.seek(1)
-            except EOFError:
-                isanimated = False
-            else:
-                isanimated = True
-
-            if isanimated == True:
-                await ctx.send(embed=discord.Embed(description='Animated Pictures are currently not supported for the blur filter!', color=random.choice(colors)))
-
-            elif isanimated == False:
-                im = img.filter(ImageFilter.BLUR)
-                b = BytesIO()
-                im.save(b, format='PNG')
-                byte_im = b.getvalue()
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=random.choice(colors)
-                )
-                mbed.set_image(url='attachment://blur.png')
-                mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
-                with open('blur.png','wb')as img:
-                    img.write(byte_im)
-                    file = discord.File("blur.png")
-                    await ctx.send(embed=mbed, file=file)
-                os.remove("blur.png")
+            async with aiohttp.ClientSession as ses:
+                async with ses.get(f'https://nekobot.xyz/apu/imagegen?type=blurpify&image={url}') as r:
+                    data = await r.json()
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=random.choice(colors)
+                    )
+                    mbed.set_image(url=data['message'])
+                    mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed)
+                    await ses.close()
 
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -212,8 +195,8 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Syntax: p!rb <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
-    @blur.error
-    async def blur_error(self, ctx, error):
+    @blurp.error
+    async def blurp_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
                 title='Hold on there, buddy',
@@ -223,34 +206,17 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            response = requests.get(ctx.author.avatar_url)
-            img = Image.open(BytesIO(response.content), mode='r')
-            try:
-                img.seek(1)
-            except EOFError:
-                isanimated = False
-            else:
-                isanimated = True
-
-            if isanimated == True:
-                await ctx.send(embed=discord.Embed(color=err_color, description='Your pfp may be a gif! You may also use p!blur <image link>'))
-
-            elif isanimated == False:
-                im = img.filter(ImageFilter.BLUR)
-                b = BytesIO()
-                im.save(b, format='PNG')
-                byte_im = b.getvalue()
-                with open('blur.png','wb')as img:
-                    img.write(byte_im)
-                    file = discord.File("blur.png")
+            async with aiohttp.ClientSession as ses:
+                async with ses.get(f'https://nekobot.xyz/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
+                    data = await r.json()
                     mbed = discord.Embed(
                         title='Snap!',
                         color=random.choice(colors)
                     )
-                    mbed.set_image(url='attachment://blur.png')
-                    mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
-                    await ctx.send(embed=mbed, file=file)
-                os.remove("blur.png")
+                    mbed.set_image(url=data['message'])
+                    mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed)
+                    await ses.close()
 
 
 def setup(bot):
