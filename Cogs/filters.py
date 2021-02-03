@@ -207,7 +207,7 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            async with aiohttp.ClientSession as ses:
+            async with aiohttp.ClientSession() as ses:
                 async with ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
                     data = await r.json()
                     mbed = discord.Embed(
