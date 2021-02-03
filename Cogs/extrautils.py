@@ -4,7 +4,7 @@ import random
 from discord.ext.commands import BucketType
 
 err_color = discord.Color.red()
-colors = [0xe3a2fc, 0x0da2ff]
+color = 0x0da2ff
 
 class extrautils(commands.Cog):
     def __init__(self, bot):
@@ -15,7 +15,7 @@ class extrautils(commands.Cog):
     async def avatar(self, ctx, user: discord.User):
         mbed = discord.Embed(
             title=f"Link",
-            color=random.choice(colors)
+            color=color
         )
         mbed.set_author(name=f'{user.name} | Requested by {ctx.author}', icon_url=f'{user.avatar_url}')
         mbed.url = f'{user.avatar_url}'
@@ -35,7 +35,7 @@ class extrautils(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title=f"Link",
-                color=random.choice(colors)
+                color=color
             )
             mbed.url = f'{ctx.author.avatar_url}'
             mbed.set_author(name=f'{ctx.author.name} | Requested by {ctx.author}', icon_url=f'{ctx.author.avatar_url}')

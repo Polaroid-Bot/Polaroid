@@ -4,7 +4,7 @@ import random
 from discord.ext.commands import BucketType
 
 err_color = discord.Color.red()
-colors = [0xe3a2fc, 0x0da2ff]
+color = 0x0da2ff
 
 class manipulation(commands.Cog):
     def __init__(self, bot):
@@ -20,53 +20,28 @@ class manipulation(commands.Cog):
                 color=random.choice(colors)
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
-            mbed.set_footer(text='Wasted | Requested By {ctx.author}')
+            mbed.set_footer(text=f'Wasted | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
-    @commands.command(aliases=['bright'])
-    @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def brighten(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=random.choice(colors)
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
-            mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
-            
-    @commands.command(aliases=['bright'])
-    @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def brighten(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=random.choice(colors)
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
-            mbed.set_footer(text=f'100% Brightened | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
+    @commands.command()
+    async def deepfry(self, ctx, url: str):
+        async with aiohttp.ClientSession() as ses:
+            async with ses.get(f'https://nekobot.xyz/api/imagegen?type=deepfry&image={url}') as r:
+                if r.status in range(200, 299):
+                    data = await r.json()
+                    url = data['message']
+                    mbed = discord.Embed(
+                        title='Snap',
+                        color=color
+                    )
+                    mbed.set_image(url=url)
+                    mbed.set_footer(text=f'Deepfry | Requested By {ctx.author}')
+                    await ctx.send(embed=mbed)
+                    await ses.close()
+                else:
+                    await ctx.send(discord.Embed(f'<:error:806619029044723722:> Problem while snapping! | {r.status} response.', color=color))
+                    await ses.close()
 
-    @brighten.error
-    async def bright_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            errembed = discord.Embed(
-                title='Hold on there, buddy',
-                color=err_color,
-                description='Wait 3 more seconds before you can get another snap!'
-            )
-            await ctx.send(embed=errembed)
-
-        elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=random.choice(colors)
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!brighten <image link> | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
 
     @wasted.error
     async def w_error(self, ctx, error):

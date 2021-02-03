@@ -4,7 +4,7 @@ import random
 from discord.ext.commands import BucketType
 
 err_color = discord.Color.red()
-colors = [0xe3a2fc, 0x0da2ff]
+color = 0x0da2ff
 
 class help(commands.Cog):
     def __init__(self, bot):
@@ -16,10 +16,10 @@ class help(commands.Cog):
         mbed = discord.Embed(
             title='Commands | p! or @mention',
             description='Enjoy my list of image related commands. <:camera:804427554688598038>',
-            color=random.choice(colors)
+            color=color
         )
         mbed.add_field(name='Filters', value='> `p!avatar <image link>`\n> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blurpify <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
-        mbed.add_field(name='Manipulation', value='> `brighten <image>`\n> `p!wasted <image link>`')
+        mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`\n')
         await ctx.send(embed=mbed)
 
 

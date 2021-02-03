@@ -11,7 +11,7 @@ import random
 
 
 err_color = discord.Color.red()
-colors = [0xe3a2fc, 0x0da2ff]
+color = 0x0da2ff
 
 class filters(commands.Cog):
     def __init__(self, bot):
@@ -28,7 +28,7 @@ class filters(commands.Cog):
                     data = await r.json()
                     mbed = discord.Embed(
                         title='Snap!',
-                        color=random.choice(colors)
+                        color=0x7289da
                     )
                     mbed.set_image(url=data['message'])
                     mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
@@ -42,7 +42,7 @@ class filters(commands.Cog):
         if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0xffcba4
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
             mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
@@ -56,7 +56,7 @@ class filters(commands.Cog):
         if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0x192814
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
             mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
@@ -69,7 +69,7 @@ class filters(commands.Cog):
         if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0x616161
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
             mbed.set_footer(text=f'Greyscale Filter | Requested by {ctx.author}')
@@ -82,7 +82,7 @@ class filters(commands.Cog):
         if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0xfffac4
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={url}")
             mbed.set_footer(text=f'Sepia Filter | Requested by {ctx.author}')
@@ -95,10 +95,42 @@ class filters(commands.Cog):
         if url.startswith(http):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=color
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={url}")
             mbed.set_footer(text=f'Glass Filter | Requested by {ctx.author}')
+            await ctx.send(embed=mbed)
+
+    @commands.command(aliases=['bright'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def brighten(self, ctx, url: str):
+        http = 'https://', 'http://'
+        if url.startswith(http):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=0xffff
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
+            mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
+            await ctx.send(embed=mbed)
+
+    @brighten.error
+    async def bright_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            mbed = discord.Embed(
+                title='Snap!',
+                color=0xffff
+            )
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={ctx.author.avatar_url}")
+            mbed.set_footer(text=f'Syntax: p!brighten <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
     @glass.error
@@ -133,7 +165,7 @@ class filters(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0xfffac4
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!sepia <image link> | Requested by {ctx.author}')
@@ -152,7 +184,7 @@ class filters(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0x616161
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!gryscl <image link> | Requested by {ctx.author}')
@@ -171,7 +203,7 @@ class filters(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0x192814
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!in <image link> | Requested by {ctx.author}')
@@ -190,7 +222,7 @@ class filters(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=0xffcba4
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Syntax: p!rb <image link> | Requested By {ctx.author}')
@@ -212,7 +244,7 @@ class filters(commands.Cog):
                     data = await r.json()
                     mbed = discord.Embed(
                         title='Snap!',
-                        color=random.choice(colors)
+                        color=0x7289da
                     )
                     mbed.set_image(url=data['message'])
                     mbed.set_footer(text=f'Blurple Filter | Requested by {ctx.author}')
