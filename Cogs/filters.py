@@ -35,7 +35,7 @@ class filters(commands.Cog):
                 mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                 await ctx.send(embed=mbed)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! | {r.status} response.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -255,7 +255,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                     await ctx.send(embed=mbed)
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! | {r.status} response.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
 
 
 
