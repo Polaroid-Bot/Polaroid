@@ -49,6 +49,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
             mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
 
     @commands.command(aliases=['in'])
@@ -63,6 +65,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
             mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
     @commands.command(aliases=['gryscl'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -76,6 +80,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
             mbed.set_footer(text=f'Greyscale Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
     @commands.command(aliases=['sep'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -89,6 +95,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={url}")
             mbed.set_footer(text=f'Sepia Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -102,6 +110,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={url}")
             mbed.set_footer(text=f'Glass Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
     @commands.command(aliases=['bright'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -115,7 +125,8 @@ class filters(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
             mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
-
+        else:
+            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
     @brighten.error
     async def bright_error(self, ctx, error):

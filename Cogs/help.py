@@ -18,9 +18,11 @@ class help(commands.Cog):
             description='Enjoy my list of image related commands. <:camera:804427554688598038>',
             color=color
         )
-        mbed.add_field(name='Filters', value='> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blurpify <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
-        mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`\n')
-        mbed.add_field(name='Extras', value='> `p!avatar <image link>`\n> `p!help`', inline=True)
+        mbed.add_field(name='Filters', value='> `p! greyscale <image link>`\n> `p! sepia <image link>`\n> `p! blurpify <image link>`\n> `p! rainbow <image link>`\n> `p! invert <image link>`', inline=True)
+        mbed.add_field(name='Manipulation', value='> `p! wasted <image link>`', inline=True)
+        mbed.add_field(name='Emojis', value='> `p! cremoji <image link>`\n> `p! delemoji <emoji>`', inline=True)
+        mbed.add_field(name='Extras', value='> `p! avatar <image link>`\n> `p! help`', inline=True)
+        mbed.set_footer(text='Note that many of these commands do not support gifs.')
         await ctx.send(embed=mbed)
 
 
@@ -30,7 +32,7 @@ class help(commands.Cog):
             errembed = discord.Embed(
                 title='Hold on there, buddy',
                 color=err_color,
-                description='Wait 3 more seconds before you can recieve another help msg!'
+                description='Wait 3 more seconds before you can recieve another help message!'
             )
             await ctx.send(embed=errembed)
 
