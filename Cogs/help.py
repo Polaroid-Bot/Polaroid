@@ -18,8 +18,9 @@ class help(commands.Cog):
             description='Enjoy my list of image related commands. <:camera:804427554688598038>',
             color=color
         )
-        mbed.add_field(name='Filters', value='> `p!deepfry`\n> `p!avatar <image link>`\n> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blurpify <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
+        mbed.add_field(name='Filters', value='> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blurpify <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
         mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`\n')
+        mbed.add_field(name='Extras', value='> `p!avatar <image link>`\n> `p!help`')
         await ctx.send(embed=mbed)
 
 
