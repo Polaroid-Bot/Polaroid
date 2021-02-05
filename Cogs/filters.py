@@ -243,20 +243,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            url = ctx.author
-            async with self.ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url.avatar_url}') as r:
-                if r.status in range(200, 299):
-                    data = await r.json()
-                    url = data['message']
-                    mbed = discord.Embed(
-                        title='Snap',
-                        color=color
-                    )
-                    mbed.set_image(url=url)
-                    mbed.set_footer(text=f'blurpify | Requested By {ctx.author}')
-                    await ctx.send(embed=mbed)
-                else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! | {r.status} response.', color=color))
+            async with self.ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={ctx.author.avatar_url}') as r:
+            if r.status in range(200, 299):
+                data = await r.json()
+                url = data['message']
+                mbed = discord.Embed(
+                    title='Snap',
+                    color=color
+                )
+                mbed.set_image(url=url)
+                mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
+                await ctx.send(embed=mbed)
+            else:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! | {r.status} response.', color=color))
 
 
 
