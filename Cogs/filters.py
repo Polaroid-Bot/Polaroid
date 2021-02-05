@@ -9,7 +9,7 @@ from io import BytesIO
 import aiohttp
 import random
 import requests
-import deeppyer, asyncio
+import asyncio
 
 err_color = discord.Color.red()
 color = 0x0da2ff

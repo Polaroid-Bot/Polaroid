@@ -20,7 +20,7 @@ class help(commands.Cog):
         )
         mbed.add_field(name='Filters', value='> `p!greyscale <image link>`\n> `p!sepia <image link>`\n> `blurpify <image link>`\n> `rainbow <image link>`\n> `invert <image link>`')
         mbed.add_field(name='Manipulation', value='> `p!wasted <image link>`\n')
-        mbed.add_field(name='Extras', value='> `p!avatar <image link>`\n> `p!help`')
+        mbed.add_field(name='Extras', value='> `p!avatar <image link>`\n> `p!help`', inline=True)
         await ctx.send(embed=mbed)
 
 
