@@ -95,17 +95,13 @@ class manipulation(commands.Cog):
                         b = BytesIO()
                         im_rtt.save(b, 'PNG')
                         b_im = b.getvalue()
-                        async with aiofile.async_open('rotated.png', 'wb') as f:
-                            im = await f.write(b_im)
-                            file = discord.File('rotated.png')
-                            mbed = discord.Embed(
-                                title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
-                                color=color
-                            )
-                            mbed.set_image(url='attachment://rotated.png')
-                            await ctx.send(embed=mbed, file=file)
-                        await asyncio.sleep(1)
-                        os.remove('rotated.png')
+                        file = discord.File('rotated.png', b_im)
+                        mbed = discord.Embed(
+                            title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
+                            color=color
+                        )
+                        mbed.set_image(url='attachment://rotated.png')
+                        await ctx.send(embed=mbed, file=file)
                     else:
                         await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
