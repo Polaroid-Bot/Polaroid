@@ -3,3 +3,4 @@ discord.py
 python-dotenv
 pillow
 requests
+aiofile

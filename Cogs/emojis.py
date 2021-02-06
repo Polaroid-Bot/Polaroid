@@ -12,7 +12,7 @@ class emojis(commands.Cog):
         self.ses = bot.aiohttp_session
 
 
-    @commands.command(aliases=['ce'])
+    @commands.command(aliases=['ce', 'crem'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def cremoji(self, ctx, url: str, *, name):
         guild = ctx.guild
@@ -29,7 +29,7 @@ class emojis(commands.Cog):
                 except discord.HTTPException:
                     await ctx.send(embed=discord.Embed(description='<:error:806619029044723722> File size is too big.', color=color))
 
-    @commands.command(aliases=['de'])
+    @commands.command(aliases=['de', 'drem'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def delemoji(self, ctx, emoji: discord.Emoji):
         if ctx.author.guild_permissions.manage_emojis:
