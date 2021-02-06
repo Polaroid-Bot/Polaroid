@@ -84,23 +84,7 @@ class manipulation(commands.Cog):
                 await ctx.send(embed=errembed)
 
             elif isinstance(error, commands.MissingRequiredArgument):
-                async with self.ses.get(ctx.author.avatar_url) as r:
-                    if r.status in range(200, 299):
-                        im = Image.open(BytesIO(await r.read()), mode='r')
-                        im_rtt = im.rotate(angle=180)
-                        b = BytesIO()
-                        im_rtt.save(b, 'PNG')
-                        b_im = b.getvalue()
-                        file = discord.File(filename='rotated.png', fp=BytesIO(b_im))
-                        mbed = discord.Embed(
-                            title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
-                            color=color
-                        )
-                        mbed.set_image(url='attachment://rotated.png')
-                        await ctx.send(embed=mbed, file=file)
-                    else:
-                        await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
-
+                await ctx.send(embed=discord.Embed(description='Syntax: p! rtt <image url> <degrees>'))
 
 def setup(bot):
     bot.add_cog(manipulation(bot))
