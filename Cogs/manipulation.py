@@ -7,6 +7,7 @@ import aiofile
 from io import BytesIO
 from PIL import Image
 import os
+import asyncio
 
 err_color = discord.Color.red()
 color = 0x0da2ff
@@ -50,6 +51,7 @@ class manipulation(commands.Cog):
                     )
                     mbed.set_image(url='attachment://rotated.png')
                     await ctx.send(embed=mbed, file=file)
+                await asyncio.sleep(1)
                 os.remove('rotated.png')
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
@@ -75,36 +77,37 @@ class manipulation(commands.Cog):
         else:
             await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
-            @rotate.error
-            async def rtt_error(self, ctx, error):
-                if isinstance(error, commands.CommandOnCooldown):
-                    errembed = discord.Embed(
-                        title='Hold on there, buddy',
-                        color=err_color,
-                        description='Wait 3 more seconds before you can get another snap!'
-                    )
-                    await ctx.send(embed=errembed)
+        @rotate.error
+        async def rtt_error(self, ctx, error):
+            if isinstance(error, commands.CommandOnCooldown):
+                errembed = discord.Embed(
+                    title='Hold on there, buddy',
+                    color=err_color,
+                    description='Wait 3 more seconds before you can get another snap!'
+                )
+                await ctx.send(embed=errembed)
 
-                elif isinstance(error, commands.MissingRequiredArgument):
-                    async with self.ses.get(ctx.author.avatar_url) as r:
-                        if r.status in range(200, 299):
-                            im = Image.open(BytesIO(await r.read()), mode='r')
-                            im_rtt = im.rotate(angle=degrees)
-                            b = BytesIO()
-                            im_rtt.save(b, 'PNG')
-                            b_im = b.getvalue()
-                            async with aiofile.async_open('rotated.png', 'wb') as f:
-                                im = await f.write(b_im)
-                                file = discord.File('rotated.png')
-                                mbed = discord.Embed(
-                                    title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
-                                    color=color
-                                )
-                                mbed.set_image(url='attachment://rotated.png')
-                                await ctx.send(embed=mbed, file=file)
-                            os.remove('rotated.png')
-                        else:
-                            await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+            elif isinstance(error, commands.MissingRequiredArgument):
+                async with self.ses.get(ctx.author.avatar_url) as r:
+                    if r.status in range(200, 299):
+                        im = Image.open(BytesIO(await r.read()), mode='r')
+                        im_rtt = im.rotate(angle=180)
+                        b = BytesIO()
+                        im_rtt.save(b, 'PNG')
+                        b_im = b.getvalue()
+                        async with aiofile.async_open('rotated.png', 'wb') as f:
+                            im = await f.write(b_im)
+                            file = discord.File('rotated.png')
+                            mbed = discord.Embed(
+                                title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
+                                color=color
+                            )
+                            mbed.set_image(url='attachment://rotated.png')
+                            await ctx.send(embed=mbed, file=file)
+                        await asyncio.sleep(1)
+                        os.remove('rotated.png')
+                    else:
+                        await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
 
 def setup(bot):
