@@ -88,21 +88,23 @@ class manipulation(commands.Cog):
                 elif isinstance(error, commands.MissingRequiredArgument):
                     async with self.ses.get(ctx.author.avatar_url) as r:
                         if r.status in range(200, 299):
-                            img = BytesIO(await r.read())
-                            im = Image.open(img)
+                            im = Image.open(BytesIO(await r.read()), mode='r')
                             im_rtt = im.rotate(angle=degrees)
                             b = BytesIO()
                             im_rtt.save(b, 'PNG')
                             b_im = b.getvalue()
-                            file = discord.File('rotated.png', b_im)
-                            mbed = discord.Embed(
-                                title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
-                                color=color
-                            )
-                            mbed.set_image(url='attachment://rotated.png')
-                            await ctx.send(embed=mbed, file=file)
+                            async with aiofile.async_open('rotated.png', 'wb') as f:
+                                im = await f.write(b_im)
+                                file = discord.File('rotated.png')
+                                mbed = discord.Embed(
+                                    title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
+                                    color=color
+                                )
+                                mbed.set_image(url='attachment://rotated.png')
+                                await ctx.send(embed=mbed, file=file)
+                            os.remove('rotated.png')
                         else:
-                            await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
+                            await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
 
 def setup(bot):
