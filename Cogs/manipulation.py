@@ -50,7 +50,28 @@ class manipulation(commands.Cog):
                 mbed.set_image(url='attachment://rotated.png')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+
+    @commands.group(aliases=['rs'])
+    async def resize(self, ctx, url: str, width: int, height: int):
+        async with self.ses.get(url) as r:
+            if r.status in range(200, 299):
+                im = Image.open(BytesIO(await r.read()), mode='r')
+                im_res = im.resize((width, height))
+                b = BytesIO()
+                im_res.save(b, 'PNG')
+                b_im = b.getvalue()
+                file = discord.File(filename='resized.png', fp=BytesIO(b_im))
+                mbed = discord.Embed(
+                    title = f'Snap! | Image resized to {width}x{height}',
+                    color=color
+                )
+                mbed.set_image(url='attachment://resized.png')
+                await ctx.send(embed=mbed, file=file)
+            else:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+
+
 
     @wasted.error
     async def w_error(self, ctx, error):
@@ -70,8 +91,6 @@ class manipulation(commands.Cog):
             mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Wasted Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
 
         @rotate.error
         async def rtt_error(self, ctx, error):

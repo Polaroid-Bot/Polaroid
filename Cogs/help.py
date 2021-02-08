@@ -28,18 +28,18 @@ class help(commands.Cog):
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def images(self, ctx):
         mbed = discord.Embed(
-            title = 'Image Commands',
+            title='Image Commands 📸',
             color=color
         )
-        mbed.add_field(name='Filters', value='> `p! sepia <image link>`\n> `p! blurpify <image link>`\n> `p! rainbow <image link>`\n> `p! invert <image link>`')
-        mbed.add_field(name='Manipulation', value='> `p! rotate <image link> <degrees>`\n> `p! wasted <image url>`')
+        mbed.add_field(name='Filters', value='> p! invert <image link> `p! blur <image link>`\n> `p! sepia <image link>`\n> `p! blurpify <image link>`\n> `p! rainbow <image link>`\n> `p! invert <image link>`')
+        mbed.add_field(name='Manipulation', value='> `p! resize <image link> <width> <height>`\n> `p! rotate <image link> <degrees>`\n> `p! wasted <image url>`')
         await ctx.send(embed=mbed)
 
     @help.command(aliases=['emoji', 'em'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def emojis(self, ctx):
         mbed = discord.Embed(
-            title = 'Emoji Commands',
+            title='Emoji Commands <a:defaultFurret:807212291279552543>',
             color=color,
             description=f'> `p! cremoji <image link>`\n> `p! delemoji <emoji>`'
         )

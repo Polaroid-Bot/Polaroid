@@ -2,7 +2,7 @@ import os
 import discord
 from discord.ext import commands
 from PIL import ImageFilter
-from PIL import Image
+from PIL import Image, ImageFilter
 from PIL import ImageOps
 from discord.ext.commands import BucketType
 from io import BytesIO
@@ -10,6 +10,7 @@ import aiohttp
 import random
 import requests
 import asyncio
+import PIL
 
 err_color = discord.Color.red()
 color = 0x0da2ff
@@ -19,6 +20,30 @@ class filters(commands.Cog):
         self.bot = bot
         self.ses = bot.aiohttp_session
 
+
+    @commands.command()
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def blur(self, ctx, url: str):
+        async with self.ses.get(url) as r:
+            try:
+                if r.status in range(200, 299):
+                    im = Image.open(BytesIO(await r.read()), mode='r')
+                    im_blur = im.filter(filter=ImageFilter.BLUR)
+                    b = BytesIO()
+                    im_blur.save(b, 'PNG')
+                    b_im = b.getvalue()
+                    file = discord.File(filename='blurred.png', fp=BytesIO(b_im))
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url='attachment://blurred.png')
+                    mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed, file=file)
+                else:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
 
     @commands.command(aliases=['blurpify', 'blurple'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -35,7 +60,7 @@ class filters(commands.Cog):
                 mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                 await ctx.send(embed=mbed)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -50,23 +75,32 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
         else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+            await ctx.send(embed=discord.Embed(description=(description='<:error:806618798768652318> Please pass in a proper url.', color=color))
 
 
     @commands.command(aliases=['in'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def invert(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=0x192814
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={url}")
-            mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+        async with self.ses.get(url) as r:
+            try:
+                if r.status in range(200, 299):
+                    im = Image.open(BytesIO(await r.read()), mode='r')
+                    im_inv = ImageOps.invert(im)
+                    b = BytesIO()
+                    im_inv.save(b, 'PNG')
+                    b_im = b.getvalue()
+                    file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url='attachment://inverted.png')
+                    mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed, file=file)
+                else:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
 
     @commands.command(aliases=['gryscl'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -147,6 +181,70 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Syntax: p!brighten <image link> | Requested By {ctx.author}')
             await ctx.send(embed=mbed)
 
+    @blur.error
+    async def blur_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            async with self.ses.get(str(ctx.author.avatar_url)) as r:
+                try:
+                    if r.status in range(200, 299):
+                        im = Image.open(BytesIO(await r.read()), mode='r')
+                        im_blur = im.filter(filter=ImageFilter.BLUR)
+                        b = BytesIO()
+                        im_blur.save(b, 'PNG')
+                        b_im = b.getvalue()
+                        file = discord.File(filename='blurred.png', fp=BytesIO(b_im))
+                        mbed = discord.Embed(
+                            title='Snap!',
+                            color=color
+                        )
+                        mbed.set_image(url='attachment://blurred.png')
+                        mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
+                        await ctx.send(embed=mbed, file=file)
+                    else:
+                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                except:
+                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+
+    @invert.error
+    async def invert_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            async with self.ses.get(str(ctx.author.avatar_url)) as r:
+                try:
+                    if r.status in range(200, 299):
+                        im = Image.open(BytesIO(await r.read()), mode='r')
+                        im_blur = ImageOps.invert(im)
+                        b = BytesIO()
+                        im_blur.save(b, 'PNG')
+                        b_im = b.getvalue()
+                        file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
+                        mbed = discord.Embed(
+                            title='Snap!',
+                            color=color
+                        )
+                        mbed.set_image(url='attachment://inverted.png')
+                        mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
+                        await ctx.send(embed=mbed, file=file)
+                    else:
+                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                except:
+                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+
     @glass.error
     async def glass_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -160,7 +258,7 @@ class filters(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             mbed = discord.Embed(
                 title='Snap!',
-                color=random.choice(colors)
+                color=color
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={ctx.author.avatar_url}")
             mbed.set_footer(text=f'Orthodoxed Syntax: p!glass <image link> | Requested by {ctx.author}')
@@ -215,13 +313,24 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=0x192814
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/invert?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!in <image link> | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
+            async with self.ses.get(ctx.author.avatar_url) as r:
+                if r.status in range(200, 299):
+                    im = Image.open(BytesIO(await r.read()), mode='r')
+                    im_inv = ImageOps.invert(im)
+                    b = BytesIO()
+                    im_inv.save(b, 'PNG')
+                    b_im = b.getvalue()
+                    file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url='attachment://inverted.png')
+                    mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed, file=file)
+                else:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+
 
     @rainbow.error
     async def rb_error(self, ctx, error):
@@ -266,7 +375,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                     await ctx.send(embed=mbed)
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806619029044723722> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
 
 
 
