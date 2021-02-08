@@ -75,7 +75,7 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
         else:
-            await ctx.send(embed=discord.Embed(description=(description='<:error:806618798768652318> Please pass in a proper url.', color=color))
+            await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Please pass in a proper url.', color=color))
 
 
     @commands.command(aliases=['in'])
