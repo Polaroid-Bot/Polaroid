@@ -43,7 +43,7 @@ class filters(commands.Cog):
                 else:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
             except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/is a Gif.', color=color))
 
     @commands.command(aliases=['blurpify', 'blurple'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -100,7 +100,7 @@ class filters(commands.Cog):
                 else:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
             except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/is a Gif.', color=color))
 
     @commands.command(aliases=['gryscl'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
