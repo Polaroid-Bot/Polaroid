@@ -82,7 +82,9 @@ class filters(commands.Cog):
                 mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
                 await ctx.send(embed=mbed)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                data = await r.json()
+                msg = data['message']
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
 
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -243,7 +245,7 @@ class filters(commands.Cog):
                     color=color
                 )
                 mbed.set_image(url=f"attachment://pixel.{img.format}")
-                mbed.set_footer(text='Syntax: p! pixel <image link> | Quality may not be good. Specify url if this is the case.')
+                mbed.set_footer(text='Syntax: p! pixel <image link> | Quality may be bad. Specify url if this is the case.')
                 await ctx.send(embed=mbed, file=file)
             except:
                 await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
@@ -268,7 +270,7 @@ class filters(commands.Cog):
                     color=color
                 )
                 mbed.set_image(url=f"attachment://oil.{img.format}")
-                mbed.set_footer(text='Syntax: p! oil <image link> | Quality may not be good. Specify url if this is the case.')
+                mbed.set_footer(text='Syntax: p! oil <image link> | Quality may be bad. Specify url if this is the case.')
                 await ctx.send(embed=mbed, file=file)
             except:
                 await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
@@ -392,11 +394,12 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url_as(format="png"))
             mbed = discord.Embed(
                 title='Snap!',
                 color=0x616161
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
             mbed.set_footer(text=f'Syntax: p! gryscl <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
@@ -475,7 +478,9 @@ class filters(commands.Cog):
                     mbed.set_footer(text=f'Syntax: p! blurp <image link> | Requested By {ctx.author}')
                     await ctx.send(embed=mbed)
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
+                    data = await r.json()
+                    msg = data['message']
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Your pfp may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
 
 
 
