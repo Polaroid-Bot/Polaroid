@@ -8,7 +8,6 @@ from discord.ext.commands import BucketType
 from io import BytesIO
 import aiohttp
 import random
-import requests
 import asyncio
 from asyncdagpi import Client, ImageFeatures
 from dotenv import load_dotenv
