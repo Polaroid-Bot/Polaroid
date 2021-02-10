@@ -8,6 +8,8 @@ from io import BytesIO
 from PIL import Image
 import os
 import asyncio
+from asyncdagpi import Client, ImageFeatures
+from dotenv import load_dotenv
 
 err_color = discord.Color.red()
 color = 0x0da2ff
@@ -16,6 +18,10 @@ class manipulation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ses = bot.aiohttp_session
+        token = os.getenv("DAGPI")
+        self.dagpi = Client(token)
+    
+    ## FUN COMMANDS
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -31,6 +37,9 @@ class manipulation(commands.Cog):
             await ctx.send(embed=mbed)
         else:
             await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+
+
+    ## IMAGE EDITING AND PROCESSING
 
     @commands.command(aliases=['rtt'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -84,26 +93,29 @@ class manipulation(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
+            author = ctx.author
+            img = await self.dagpi.image_process(ImageFeatures.wasted(), str(author.avatar_url))
+            file = discord.File(fp=img.image, filename=f"pixel.{img.format}")
             mbed = discord.Embed(
                 title='Snap!',
-                color=0xfffac4
+                color=color
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Wasted Filter | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
+            mbed.set_image(url=f"attachment://wasted.{img.format}")
+            mbed.set_footer(text='Syntax: p! wasted <image link>')
+            await ctx.send(embed=mbed, file=file)
 
-        @rotate.error
-        async def rtt_error(self, ctx, error):
-            if isinstance(error, commands.CommandOnCooldown):
-                errembed = discord.Embed(
-                    title='Hold on there, buddy',
-                    color=err_color,
-                    description='Wait 3 more seconds before you can get another snap!'
-                )
-                await ctx.send(embed=errembed)
+    @rotate.error
+    async def rtt_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
 
-            elif isinstance(error, commands.MissingRequiredArgument):
-                await ctx.send(embed=discord.Embed(description='Syntax: p! rtt <image url> <degrees>'))
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(embed=discord.Embed(description='Syntax: p! rtt <image url> <degrees>'))
 
 def setup(bot):
     bot.add_cog(manipulation(bot))

@@ -31,8 +31,9 @@ class help(commands.Cog):
             title='Image Commands 📸',
             color=color
         )
-        mbed.add_field(name='Filters', value='> p! invert <image link> `p! blur <image link>`\n> `p! sepia <image link>`\n> `p! blurpify <image link>`\n> `p! rainbow <image link>`\n> `p! invert <image link>`')
-        mbed.add_field(name='Manipulation', value='> `p! resize <image link> <width> <height>`\n> `p! rotate <image link> <degrees>`\n> `p! wasted <image url>`')
+        mbed.add_field(name='Filters', value='> `p! Polaroid/Frame <image>`\n> `p! oilify <image>`\n> `p! invert <image>`\n> `p! blur <image>`\n> `p! sepia <image>`\n> `p! blurpify <image>`\n> `p! rainbow <image>`\n> `p! invert <image>`')
+        mbed.add_field(name='Editing', value='> `p! resize <image> <width> <height>`\n> `p! rotate <image> <degrees>`')
+        mbed.add_field(name='Fun', value='> `p! wasted <image url>`', inline=False)
         await ctx.send(embed=mbed)
 
     @help.command(aliases=['emoji', 'em'])

@@ -10,15 +10,37 @@ import aiohttp
 import random
 import requests
 import asyncio
-import PIL
+from asyncdagpi import Client, ImageFeatures
+from dotenv import load_dotenv
 
 err_color = discord.Color.red()
 color = 0x0da2ff
+
 
 class filters(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ses = bot.aiohttp_session
+        token = os.getenv("DAGPI")
+        self.dagpi = Client(token)
+
+
+    @commands.command(aliases=['polaroid', 'plrd', 'frame'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def snap(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.polaroid(), url)
+            mbed = discord.Embed(
+                title='Snap!',
+                color=color
+            )
+            mbed.set_image(url=f"attachment://polaroid.{img.format}")
+            mbed.set_footer(text=f'Polaroid Filter | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"polaroid.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+
 
 
     @commands.command()
@@ -65,42 +87,35 @@ class filters(commands.Cog):
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def rainbow(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.gay(), url)
             mbed = discord.Embed(
                 title='Snap!',
-                color=0xffcba4
+                color=err_color
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={url}")
+            mbed.set_image(url=f"attachment://rainbow.{img.format}")
             mbed.set_footer(text=f'Rainbow Filter | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Please pass in a proper url.', color=color))
+            file = discord.File(fp=img.image, filename=f"rainbow.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
 
     @commands.command(aliases=['in'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def invert(self, ctx, url: str):
-        async with self.ses.get(url) as r:
-            try:
-                if r.status in range(200, 299):
-                    im = Image.open(BytesIO(await r.read()), mode='r')
-                    im_inv = ImageOps.invert(im)
-                    b = BytesIO()
-                    im_inv.save(b, 'PNG')
-                    b_im = b.getvalue()
-                    file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
-                    mbed = discord.Embed(
-                        title='Snap!',
-                        color=color
-                    )
-                    mbed.set_image(url='attachment://inverted.png')
-                    mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
-                    await ctx.send(embed=mbed, file=file)
-                else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
-            except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/is a Gif.', color=color))
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.invert(), url)
+            mbed = discord.Embed(
+                title='Snap!',
+                color=0x39ff14
+            )
+            mbed.set_image(url=f"attachment://inverted.{img.format}")
+            mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @commands.command(aliases=['gryscl'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -120,50 +135,70 @@ class filters(commands.Cog):
     @commands.command(aliases=['sep'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def sepia(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.sepia(), url)
             mbed = discord.Embed(
                 title='Snap!',
                 color=0xfffac4
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={url}")
+            mbed.set_image(url=f"attachment://sepia.{img.format}")
             mbed.set_footer(text=f'Sepia Filter | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+            file = discord.File(fp=img.image, filename=f"sepia.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
-    @commands.command()
+    @commands.command(aliases=['shatter'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def glass(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.shatter(), url)
             mbed = discord.Embed(
                 title='Snap!',
                 color=color
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={url}")
-            mbed.set_footer(text=f'Glass Filter | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+            mbed.set_image(url=f"attachment://shattered.{img.format}")
+            mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"shattered.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
-    @commands.command(aliases=['bright'])
+    @commands.command(aliases=['oil'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def brighten(self, ctx, url: str):
-        http = 'https://', 'http://'
-        if url.startswith(http):
+    async def oilify(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.paint(), url)
             mbed = discord.Embed(
                 title='Snap!',
-                color=0xffff
+                color=0xf8de7e
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={url}")
-            mbed.set_footer(text=f'70% Brightened | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
-        else:
-            await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))
+            mbed.set_image(url=f"attachment://oil.{img.format}")
+            mbed.set_footer(text=f'Oil Painting Filter | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"oil.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
-    @brighten.error
-    async def bright_error(self, ctx, error):
+    @commands.command(aliases=['pixelify', 'pixel'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def pixelate(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.pixel(), url)
+            file = discord.File(fp=img.image, filename=f"pixel.{img.format}")
+            mbed = discord.Embed(
+                title='Snap!',
+                color=color
+            )
+            mbed.set_image(url=f"attachment://pixel.{img.format}")
+            mbed.set_footer(text=f'Pixelated Filter | Requested by {ctx.author}')
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+
+
+    @snap.error
+    async def snap_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
                 title='Hold on there, buddy',
@@ -173,13 +208,71 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=0xffff
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.polaroid(), url)
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://polaroid.{img.format}")
+                mbed.set_footer(text=f'Polaroid Filter | Requested by {ctx.author}')
+                file = discord.File(fp=img.image, filename=f"polaroid.{img.format}")
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+
+
+    @pixelate.error
+    async def pixel_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/brightness?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!brighten <image link> | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url)
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.pixel(), url)
+                file = discord.File(fp=img.image, filename=f"pixel.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://pixel.{img.format}")
+                mbed.set_footer(text='Syntax: p! pixel <image link> | Quality may not be good. Specify url if this is the case.')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
+
+    @oilify.error
+    async def oil_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url)
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.paint(), url)
+                file = discord.File(fp=img.image, filename=f"oil.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://oil.{img.format}")
+                mbed.set_footer(text='Syntax: p! oil <image link> | Quality may not be good. Specify url if this is the case.')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
+
 
     @blur.error
     async def blur_error(self, ctx, error):
@@ -206,7 +299,7 @@ class filters(commands.Cog):
                             color=color
                         )
                         mbed.set_image(url='attachment://blurred.png')
-                        mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
+                        mbed.set_footer(text=f'Syntax: p! blur <image link> | Requested by {ctx.author}')
                         await ctx.send(embed=mbed, file=file)
                     else:
                         await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
@@ -224,26 +317,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            async with self.ses.get(str(ctx.author.avatar_url)) as r:
-                try:
-                    if r.status in range(200, 299):
-                        im = Image.open(BytesIO(await r.read()), mode='r')
-                        im_blur = ImageOps.invert(im)
-                        b = BytesIO()
-                        im_blur.save(b, 'PNG')
-                        b_im = b.getvalue()
-                        file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
-                        mbed = discord.Embed(
-                            title='Snap!',
-                            color=color
-                        )
-                        mbed.set_image(url='attachment://inverted.png')
-                        mbed.set_footer(text=f'Invert Filter | Requested by {ctx.author}')
-                        await ctx.send(embed=mbed, file=file)
-                    else:
-                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
-                except:
-                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.invert(), url)
+                file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://inverted.{img.format}")
+                mbed.set_footer(text='Syntax: p! inverted <image link> | Quality may not be good. Specify url if this is the case.')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @glass.error
     async def glass_error(self, ctx, error):
@@ -256,13 +342,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=color
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/glass?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Orthodoxed Syntax: p!glass <image link> | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.shatter(), url)
+                file = discord.File(fp=img.image, filename=f"shattered.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://shattered.{img.format}")
+                mbed.set_footer(text=f'Shattered Glass Filter | Requested by {ctx.author}')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @sepia.error
     async def sep_error(self, ctx, error):
@@ -275,13 +367,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=0xfffac4
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/sepia?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!sepia <image link> | Requested by {ctx.author}')
-            await ctx.send(embed=mbed)
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.sepia(), url)
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://sepia.{img.format}")
+                mbed.set_footer(text=f'Sepia Filter | Requested by {ctx.author}')
+                file = discord.File(fp=img.image, filename=f"sepia.{img.format}")
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @greyscale.error
     async def gryscl_error(self, ctx, error):
@@ -299,7 +397,7 @@ class filters(commands.Cog):
                 color=0x616161
             )
             mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!gryscl <image link> | Requested by {ctx.author}')
+            mbed.set_footer(text=f'Syntax: p! gryscl <image link> | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
 
     @invert.error
@@ -313,23 +411,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            async with self.ses.get(ctx.author.avatar_url) as r:
-                if r.status in range(200, 299):
-                    im = Image.open(BytesIO(await r.read()), mode='r')
-                    im_inv = ImageOps.invert(im)
-                    b = BytesIO()
-                    im_inv.save(b, 'PNG')
-                    b_im = b.getvalue()
-                    file = discord.File(filename='inverted.png', fp=BytesIO(b_im))
-                    mbed = discord.Embed(
-                        title='Snap!',
-                        color=color
-                    )
-                    mbed.set_image(url='attachment://inverted.png')
-                    mbed.set_footer(text=f'Inverted Filter | Requested by {ctx.author}')
-                    await ctx.send(embed=mbed, file=file)
-                else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.rainbow(), url)
+                file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://inverted.{img.format}")
+                mbed.set_footer(text='Syntax: p! in <image link>')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
 
     @rainbow.error
@@ -343,13 +437,19 @@ class filters(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            mbed = discord.Embed(
-                title='Snap!',
-                color=0xffcba4
-            )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/gay?avatar={ctx.author.avatar_url}")
-            mbed.set_footer(text=f'Syntax: p!rb <image link> | Requested By {ctx.author}')
-            await ctx.send(embed=mbed)
+            url = f"{ctx.author.avatar_url}"
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.gay(), url)
+                file = discord.File(fp=img.image, filename=f"rainbow.{img.format}")
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://rainbow.{img.format}")
+                mbed.set_footer(text='Syntax: p! rb <image link>')
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
 
     @blurp.error
@@ -372,7 +472,7 @@ class filters(commands.Cog):
                         color=color
                     )
                     mbed.set_image(url=url)
-                    mbed.set_footer(text=f'Blurple | Requested By {ctx.author}')
+                    mbed.set_footer(text=f'Syntax: p! blurp <image link> | Requested By {ctx.author}')
                     await ctx.send(embed=mbed)
                 else:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Your pfp may be a gif. | {r.status} response.', color=color))
