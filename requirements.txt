@@ -2,6 +2,6 @@ discord
 discord.py
 python-dotenv
 pillow
-requests
+aiohttp
 aiofile
 asyncdagpi
