@@ -1,17 +1,12 @@
 import os
 import discord
 from discord.ext import commands
-from PIL import ImageFilter
 from PIL import Image, ImageFilter
-from PIL import ImageOps
 from discord.ext.commands import BucketType
 from io import BytesIO
-import aiohttp
-import random
-import asyncio
 from asyncdagpi import Client, ImageFeatures
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 err_color = discord.Color.red()
 color = 0x0da2ff
 
@@ -22,6 +17,22 @@ class filters(commands.Cog):
         self.ses = bot.aiohttp_session
         token = os.getenv("DAGPI")
         self.dagpi = Client(token)
+
+    @commands.command()
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def magik(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.magik(), url)
+            mbed = discord.Embed(
+                title='Snap!',
+                color=color
+            )
+            mbed.set_image(url=f"attachment://magik.{img.format}")
+            mbed.set_footer(text=f'Magik | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"magik.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
 
     @commands.command(aliases=['polaroid', 'plrd', 'frame'])
@@ -40,7 +51,20 @@ class filters(commands.Cog):
         except:
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
-
+    @commands.command(aliases=['poster'])
+    async def posterize(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.poster(), url)
+            file = discord.File(fp=img.image, filename=f"posterized.{img.format}")
+            mbed = discord.Embed(
+                title='Snap!',
+                color=color
+            )
+            mbed.set_image(url=f"attachment://posterized.{img.format}")
+            mbed.set_footer(text=f'Posterized | Requested by {ctx.author} ')
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -248,6 +272,32 @@ class filters(commands.Cog):
                 await ctx.send(embed=mbed, file=file)
             except:
                 await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
+
+
+    @posterize.error
+    async def poster_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url)
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.poster(), url)
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://posterized.{img.format}")
+                mbed.set_footer(text=f'Syntax: p! posterize <image link> | Quality may be bad. Specify url if this is the case.')
+                file = discord.File(fp=img.image, filename=f"posterized.{img.format}")
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @oilify.error
     async def oil_error(self, ctx, error):

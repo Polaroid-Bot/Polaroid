@@ -53,6 +53,7 @@ class manipulation(commands.Cog):
         except:
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
+
     @commands.command(aliases=['5g1g'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def fiveguysonegirl(self, ctx, url1: str, url2: str):
@@ -72,7 +73,24 @@ class manipulation(commands.Cog):
                 await ctx.send(embed=mbed, file=file)
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
-            
+
+    @commands.command()
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def magik(self, ctx, url: str):
+        try:
+            img = await self.dagpi.image_process(ImageFeatures.magik(), url)
+            mbed = discord.Embed(
+                title='Snap!',
+                color=color
+            )
+            mbed.set_image(url=f"attachment://magik.{img.format}")
+            mbed.set_footer(text=f'Magik | Requested by {ctx.author}')
+            file = discord.File(fp=img.image, filename=f"magik.{img.format}")
+            await ctx.send(embed=mbed, file=file)
+        except:
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+
+
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def triggered(self, ctx, url: str):
@@ -84,15 +102,35 @@ class manipulation(commands.Cog):
                 color=err_color
             )
             mbed.set_image(url=f"attachment://triggered.{img.format}")
-            mbed.set_footer(text='Syntax: p! triggered <image link> | Quality may be bad. Specify url if this is the case.')
+            mbed.set_footer(text=f'Triggered | Requested by {ctx.author}')
             await ctx.send(embed=mbed, file=file)
         except:
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
+    @magik.error
+    async def magik_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
 
-    @commands.command()
-    async def
-
+        elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url)
+            try:
+                img = await self.dagpi.image_process(ImageFeatures.magik(), url)
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f"attachment://magik.{img.format}")
+                mbed.set_footer(text=f'Syntax: p! magik <image link> | Quality may be bad. Specify url if this is the case.')
+                file = discord.File(fp=img.image, filename=f"magik.{img.format}")
+                await ctx.send(embed=mbed, file=file)
+            except:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
     @swirl.error
     async def swirl_error(self, ctx, error):
@@ -118,6 +156,7 @@ class manipulation(commands.Cog):
                 await ctx.send(embed=mbed, file=file)
             except:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+
 
     @triggered.error
     async def triggered_error(self, ctx, error):
