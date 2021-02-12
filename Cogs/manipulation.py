@@ -90,6 +90,10 @@ class manipulation(commands.Cog):
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
 
 
+    @commands.command()
+    async def
+
+
     @swirl.error
     async def swirl_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
