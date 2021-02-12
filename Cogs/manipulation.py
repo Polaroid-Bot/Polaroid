@@ -1,13 +1,9 @@
 from discord.ext import commands
 import discord
-import random
 from discord.ext.commands import BucketType
-import aiohttp
-import aiofile
 from io import BytesIO
 from PIL import Image
 import os
-import asyncio
 from asyncdagpi import Client, ImageFeatures
 
 err_color = discord.Color.red()
@@ -21,6 +17,7 @@ class manipulation(commands.Cog):
         self.dagpi = Client(self.dag_token)
     
     ## FUN COMMANDS
+
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -51,7 +48,7 @@ class manipulation(commands.Cog):
             file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
     @commands.command(aliases=['5g1g'])
@@ -88,7 +85,7 @@ class manipulation(commands.Cog):
             file = discord.File(fp=img.image, filename=f"magik.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
     @commands.command()
@@ -105,7 +102,7 @@ class manipulation(commands.Cog):
             mbed.set_footer(text=f'Triggered | Requested by {ctx.author}')
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
     @magik.error
     async def magik_error(self, ctx, error):
@@ -143,19 +140,29 @@ class manipulation(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            url = str(ctx.author.avatar_url)
-            try:
-                img = await self.dagpi.image_process(ImageFeatures.swirl(), url)
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=color
-                )
-                mbed.set_image(url=f"attachment://swirled.{img.format}")
-                mbed.set_footer(text=f'Swirl | Requested by {ctx.author}')
-                file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
-                await ctx.send(embed=mbed, file=file)
-            except:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            async with self.ses.get(str(ctx.author.avatar_url)) as r:
+                img = Image.open(BytesIO(await r.read()), mode='r')
+                try:
+                    img.seek(1)
+                except EOFError:
+                    url = str(ctx.author.avatar_url_as(format=f'png'))
+                else:
+                    is_gif = True
+
+                if is_gif == True:
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
+                try:
+                    img = await self.dagpi.image_process(ImageFeatures.swirl(), url)
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url=f"attachment://swirled.{img.format}")
+                    mbed.set_footer(text=f'Swirl | Requested by {ctx.author}')
+                    file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
+                    await ctx.send(embed=mbed, file=file)
+                except:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
     @triggered.error
@@ -169,20 +176,29 @@ class manipulation(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            url = f"{ctx.author.avatar_url}"
-            try:
-                img = await self.dagpi.image_process(ImageFeatures.triggered(), url)
-                file = discord.File(fp=img.image, filename=f"triggered.{img.format}")
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=color
-                )
-                mbed.set_image(url=f"attachment://triggered.{img.format}")
-                mbed.set_footer(text='Syntax: p! triggered <image link> | Quality may not be good. Specify url if this is the case.')
-                await ctx.send(embed=mbed, file=file)
-            except:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            async with self.ses.get(str(ctx.author.avatar_url)) as r:
+                img = Image.open(BytesIO(await r.read()), mode='r')
+                try:
+                    img.seek(1)
+                except EOFError:
+                    url = str(ctx.author.avatar_url_as(format=f'png'))
+                else:
+                    is_gif = True
 
+                if is_gif == True:
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
+                try:
+                    img = await self.dagpi.image_process(ImageFeatures.triggered(), url)
+                    file = discord.File(fp=img.image, filename=f"triggered.{img.format}")
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url=f"attachment://triggered.{img.format}")
+                    mbed.set_footer(text='Syntax: p! triggered <image link> | Quality may not be good. Specify url if this is the case.')
+                    await ctx.send(embed=mbed, file=file)
+                except:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
     @wasted.error
@@ -196,17 +212,27 @@ class manipulation(commands.Cog):
             await ctx.send(embed=errembed)
 
         elif isinstance(error, commands.MissingRequiredArgument):
-            url = str(ctx.author.avatar_url_as(format="png"))
-            try:
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=color
-                )
-                mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
-                mbed.set_footer(text=f'Wasted | Requested by {ctx.author}')
-                await ctx.send(embed=mbed)
-            except:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            async with self.ses.get(str(ctx.author.avatar_url)) as r:
+                img = Image.open(BytesIO(await r.read()), mode='r')
+                try:
+                    img.seek(1)
+                except EOFError:
+                    url = str(ctx.author.avatar_url_as(format=f'png'))
+                else:
+                    is_gif = True
+
+                if is_gif == True:
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
+                try:
+                    mbed = discord.Embed(
+                        title='Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url=f"https://some-random-api.ml/canvas/wasted?avatar={url}")
+                    mbed.set_footer(text=f'Wasted | Requested by {ctx.author}')
+                    await ctx.send(embed=mbed)
+                except:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
     ## IMAGE EDITING AND PROCESSING

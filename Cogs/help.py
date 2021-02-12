@@ -21,7 +21,7 @@ class help(commands.Cog):
         mbed.add_field(name='Images', value='> `p! help images`')
         mbed.add_field(name='Emojis', value='> `p! help emojis`')
         mbed.add_field(name='Extras', value='> `p! avatar <image link>`\n> `p! help <subcommand>`')
-        mbed.set_footer(text='Note that many of these commands do not support gifs.')
+        mbed.set_footer(text='Note that many of these commands do not support gifs and webp images.')
         await ctx.send(embed=mbed)
 
     @help.command(aliases=['img', 'image'])
