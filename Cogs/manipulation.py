@@ -44,7 +44,7 @@ class manipulation(commands.Cog):
             img = await self.dagpi.image_process(ImageFeatures.swirl(), url)
             mbed = discord.Embed(
                 title='Snap!',
-                color=err_color
+                color=color
             )
             mbed.set_image(url=f"attachment://swirled.{img.format}")
             mbed.set_footer(text=f'Swirl | Requested by {ctx.author}')
@@ -52,12 +52,11 @@ class manipulation(commands.Cog):
             await ctx.send(embed=mbed, file=file)
         except:
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
-    
 
     @commands.command(aliases=['5g1g'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def fiveguysonegirl(self, ctx, url1: str, url2: str):
-        async with self.ses.get(f"https://api.dagpi.xyz/image/fiveguysonegirl/?url={url1}&url2={url2}", headers={'Authorization': self.dag_token}) as r:
+        async with self.ses.get(f'https://api.dagpi.xyz/image/5g1g/?url={url1}&url2={url2}', headers={'Authorization': self.dag_token}) as r:
             if r.status in range(200, 299):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 b = BytesIO()
@@ -107,18 +106,16 @@ class manipulation(commands.Cog):
                 img = await self.dagpi.image_process(ImageFeatures.swirl(), url)
                 mbed = discord.Embed(
                     title='Snap!',
-                    color=err_color
+                    color=color
                 )
                 mbed.set_image(url=f"attachment://swirled.{img.format}")
-                mbed.set_footer(text=f'Syntax: p! swirl <image link> | Quality may be bad. Specify url if this is the case.')
+                mbed.set_footer(text=f'Swirl | Requested by {ctx.author}')
                 file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
                 await ctx.send(embed=mbed, file=file)
             except:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
-        
 
-
-    @triggered.error 
+    @triggered.error
     async def triggered_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
