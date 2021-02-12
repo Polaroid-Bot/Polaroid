@@ -1,4 +1,7 @@
 .env
 __pycache__
-Polaroid/.idea
+Polaroid/.idea/workspace.xml
 venv
+Polaroid/.idea/
+.idea/
+workspace.xml
