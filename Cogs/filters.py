@@ -222,13 +222,9 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
-
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
 
             try:
                 img = await self.dagpi.image_process(ImageFeatures.polaroid(), url)
@@ -259,13 +255,9 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
-
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
 
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.pixel(), url)
@@ -296,13 +288,9 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
-
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
 
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.poster(), url)
@@ -332,13 +320,9 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
-
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
 
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.paint(), url)
@@ -369,13 +353,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 async with self.ses.get(url) as r:
                     try:
                         if r.status in range(200, 299):
@@ -412,13 +393,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.invert(), url)
                     file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
@@ -447,13 +425,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.shatter(), url)
                     file = discord.File(fp=img.image, filename=f"shattered.{img.format}")
@@ -482,13 +457,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.sepia(), url)
                     mbed = discord.Embed(
@@ -517,13 +489,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 mbed = discord.Embed(
                     title='Snap!',
                     color=0x616161
@@ -547,13 +516,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.invert(), url)
                     file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
@@ -583,13 +549,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.gay(), url)
                     file = discord.File(fp=img.image, filename=f"rainbow.{img.format}")
@@ -619,13 +582,10 @@ class filters(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
             async with self.ses.get(f'https://nekobot.xyz/api/imagegen?type=blurpify&image={url}') as r:
                 if r.status in range(200, 299):
                     data = await r.json()

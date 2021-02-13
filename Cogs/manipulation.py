@@ -144,13 +144,10 @@ class manipulation(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.swirl(), url)
                     mbed = discord.Embed(
@@ -180,13 +177,9 @@ class manipulation(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
-
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     img = await self.dagpi.image_process(ImageFeatures.triggered(), url)
                     file = discord.File(fp=img.image, filename=f"triggered.{img.format}")
@@ -216,13 +209,10 @@ class manipulation(commands.Cog):
                 img = Image.open(BytesIO(await r.read()), mode='r')
                 try:
                     img.seek(1)
+                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 except EOFError:
                     url = str(ctx.author.avatar_url_as(format=f'png'))
-                else:
-                    is_gif = True
 
-                if is_gif == True:
-                    url = str(ctx.author.avatar_url_as(format=f'gif'))
                 try:
                     mbed = discord.Embed(
                         title='Snap!',
