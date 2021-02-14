@@ -270,7 +270,43 @@ class manipulation(commands.Cog):
 
     ## IMAGE EDITING AND PROCESSING
 
+
+    @commands.command(aliases=['jpeg', 'jpegify'])
+    async def tojpeg(self, ctx, url: str):
+        async with self.ses.get(url) as r:
+            if r.status in range(200, 299):
+                img = Image.open(BytesIO(await r.read()), mode='r')
+                b = BytesIO()
+                img.save(b, format=f'{img.format}')
+                file = discord.File(filename='tojpeg.jpeg', fp=BytesIO(b.getvalue()))
+                mbed = discord.Embed(
+                    title='Snap! | Converted to JPEG Format',
+                    color=color
+                )
+                mbed.set_image(url='attachment://tojpeg.jpeg')
+                await ctx.send(embed=mbed, file=file)
+            else:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=err_color))
+
+    @commands.command(aliases=['png', 'pngify'])
+    async def topng(self, ctx, url: str):
+        async with self.ses.get(url) as r:
+            if r.status in range(200, 299):
+                img = Image.open(BytesIO(await r.read()), mode='r')
+                b = BytesIO()
+                img.save(b, format=f'{img.format}')
+                file = discord.File(filename='topng.png', fp=BytesIO(b.getvalue()))
+                mbed = discord.Embed(
+                    title='Snap! | Converted to PNG Format',
+                    color=color
+                )
+                mbed.set_image(url='attachment://topng.png')
+                await ctx.send(embed=mbed, file=file)
+            else:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=err_color))
+
     @commands.group(aliases=['rs'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def resize(self, ctx, url: str, width: int, height: int):
         async with self.ses.get(url) as r:
             if r.status in range(200, 299):
@@ -309,6 +345,49 @@ class manipulation(commands.Cog):
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
+    @tojpeg.error
+    async def jpeg_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            try:
+                mbed = discord.Embed(
+                    title='Snap! | Converted to JPEG Format',
+                    color=color
+                )
+                mbed.set_image(url=str(ctx.author.avatar_url_as(format='jpeg')))
+                mbed.set_footer('Syntax: p! tojpeg <image link>')
+                await ctx.send(embed=mbed)
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error during conversion process.', color=err_color))
+
+    @topng.error
+    async def png_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            try:
+                mbed = discord.Embed(
+                    title='Snap! | Converted to PNG Format',
+                    color=color
+                )
+                mbed.set_image(url=str(ctx.author.avatar_url_as(format='png')))
+                mbed.set_footer('Syntax: p! topng <image link>')
+                await ctx.send(embed=mbed)
+            except:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error during conversion process.', color=err_color))
 
     @rotate.error
     async def rtt_error(self, ctx, error):
