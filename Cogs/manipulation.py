@@ -66,6 +66,8 @@ class manipulation(commands.Cog):
                 mbed.set_image(url=f'attachment://5g1g.{img.format}')
                 mbed.set_footer(text=f'Five Guys One Girl | Requested by {ctx.author}')
                 await ctx.send(embed=mbed, file=file)
+            elif r.status == 415:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
@@ -166,6 +168,8 @@ class manipulation(commands.Cog):
                         mbed.set_image(url=f'attachment://5g1g.{img.format}')
                         mbed.set_footer(text=f'Five Of You, One Of You | Syntax: p! 5g1g <guy> <girl>')
                         await ctx.send(embed=mbed, file=file)
+                    elif r.status == 415:
+                        await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
                     else:
                         await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
@@ -281,6 +285,8 @@ class manipulation(commands.Cog):
                 mbed.set_image(url=f'attachment://rgb.png')
                 mbed.set_footer(text=f'RGB Graph | Requested by {ctx.author}')
                 await ctx.send(embed=mbed, file=file)
+            elif r.status == 415:
+                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
@@ -383,6 +389,8 @@ class manipulation(commands.Cog):
                     mbed.set_image(url=f'attachment://rgb.png')
                     mbed.set_footer(text=f"Your pfp's RGB Graph | Syntax: p! rgb <image link>")
                     await ctx.send(embed=mbed, file=file)
+                elif r.status == 415:
+                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
                 else:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 

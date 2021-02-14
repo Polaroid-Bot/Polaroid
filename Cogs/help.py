@@ -34,6 +34,7 @@ class help(commands.Cog):
         mbed.add_field(name='Filters', value='> `p! posterize <image>`\n> `p! polaroid/frame <image>`\n> `p! oilify <image>`\n> `p! invert <image>`\n> `p! blur <image>`\n> `p! sepia <image>`\n> `p! blurpify <image>`\n> `p! rainbow <image>`\n> `p! invert <image>`')
         mbed.add_field(name='Editing', value='> p! getrgb <image> `topng <image>`\n> `tojpeg <image>`\n`p! resize <image> <width> <height>`\n> `p! rotate <image> <degrees>`')
         mbed.add_field(name='Fun', value='> `p! magik <image>`\n> `p! 5g1g <guy> <girl>`\n> p! swirl <image> `p! wasted <image>`\n> `p! triggered <image>`', inline=False)
+        mbed.add_filed(name='Any Questions?', value=f'[Documentation](https://github.com/polaroid-bot/polaroid)\n[Discord](https://dsc.gg/plrd)')
         await ctx.send(embed=mbed)
 
     @help.command(aliases=['emoji', 'em'])
