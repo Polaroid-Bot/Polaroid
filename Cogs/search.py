@@ -13,19 +13,6 @@ class search(commands.Cog):
         self.pixabay = os.getenv("PIXABAY")
         self.ses = bot.aiohttp_session
 
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            errembed = discord.Embed(
-                title='Hold on there, buddy',
-                color=err_color,
-                description='Wait 3 more seconds before you can get another snap!'
-            )
-            await ctx.send(embed=errembed)
-
-        elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
-
     @commands.group(invoke_without_command=True)
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def search(self, ctx, *, query):
@@ -127,6 +114,58 @@ class search(commands.Cog):
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Image not found.', color=color))
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+    
+    @search.error()
+    async def search_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
+    
+    @photo.error()
+    async def photo_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
+
+    @wall.error()
+    async def wall_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
+
+    @art.error()
+    async def art_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
 
 
 def setup(bot):
