@@ -115,7 +115,7 @@ class search(commands.Cog):
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
     
-    @search.error()
+    @search.error
     async def search_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
@@ -128,7 +128,7 @@ class search(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
     
-    @photo.error()
+    @photo.error
     async def photo_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
@@ -141,7 +141,7 @@ class search(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
 
-    @wall.error()
+    @wall.error
     async def wall_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
@@ -154,7 +154,7 @@ class search(commands.Cog):
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Please pass in proper arguments. | Syntax: p! search art <query>', color=color))
 
-    @art.error()
+    @art.error
     async def art_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
