@@ -12,7 +12,7 @@ class search(commands.Cog):
         self.pixabay = os.getenv("PIXABAY")
         self.ses = bot.aiohttp_session
 
-    @commands.command()
+    @commands.group()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def search(self, ctx, *, query):
         query = query.replace(' ', '+')
@@ -37,8 +37,8 @@ class search(commands.Cog):
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
 
-    @magik.error
-    async def magik_error(self, ctx, error):
+    @search.error
+    async def search_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
             errembed = discord.Embed(
                 title='Hold on there, buddy',
