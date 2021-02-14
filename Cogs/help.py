@@ -34,7 +34,7 @@ class help(commands.Cog):
         )
         mbed.add_field(name='Filters', value='> `p! posterize <image>`\n> `p! polaroid/frame <image>`\n> `p! oilify <image>`\n> `p! invert <image>`\n> `p! blur <image>`\n> `p! sepia <image>`\n> `p! blurpify <image>`\n> `p! rainbow <image>`\n> `p! invert <image>`')
         mbed.add_field(name='Editing', value='> `p! getrgb <image>`\n> `topng <image>`\n> `tojpeg <image>`\n> `p! resize <image> <width> <height>`\n> `p! rotate <image> <degrees>`')
-        mbed.add_field(name='Fun', value='> p! search <query> `p! magik <image>`\n> `p! 5g1g <guy> <girl>`\n> `p! swirl <image>`\n`p! wasted <image>`\n> `p! triggered <image>`', inline=False)
+        mbed.add_field(name='Fun', value='> `p! search art <query>`\n> p! search <query> `p! magik <image>`\n> `p! 5g1g <guy> <girl>`\n> `p! swirl <image>`\n`p! wasted <image>`\n> `p! triggered <image>`', inline=False)
         await ctx.send(embed=mbed)
 
     @help.command(aliases=['emoji', 'em'])
