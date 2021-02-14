@@ -18,23 +18,6 @@ class manipulation(commands.Cog):
     
     ## FUN COMMANDS
 
-    @commands.command(aliases=['rgb', 'rgbgraph'])
-    @commands.cooldown(rate=2, per=3, type=BucketType.user)
-    async def getrgb(self, ctx, url: str):
-        async with self.ses.get(f'https://api.dagpi.xyz/image/rgb/?url={url}', headers={'Authorization': self.dag_token}) as r:
-            if r.status in range(200, 299):
-                img = BytesIO(await r.read())
-                file = discord.File(filename=f'rgb.png', fp=img)
-                mbed = discord.Embed(
-                    title='Snap!',
-                    color=color
-                )
-                mbed.set_image(url=f'attachment://rgb.png')
-                mbed.set_footer(text=f'RGB Graph | Requested by {ctx.author}')
-                await ctx.send(embed=mbed, file=file)
-            else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
-
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def wasted(self, ctx, url: str):
@@ -186,32 +169,6 @@ class manipulation(commands.Cog):
                     else:
                         await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
-    @getrgb.error
-    async def rgb_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            errembed = discord.Embed(
-                title='Hold on there, buddy',
-                color=err_color,
-                description='Wait 3 more seconds before you can get another snap!'
-            )
-            await ctx.send(embed=errembed)
-
-        elif isinstance(error, commands.MissingRequiredArgument):
-            url = str(ctx.author.avatar_url_as(format='png'))
-            async with self.ses.get(f'https://api.dagpi.xyz/image/rgb/?url={url}', headers={'Authorization': self.dag_token}) as r:
-                if r.status in range(200, 299):
-                    img = BytesIO(await r.read())
-                    file = discord.File(filename=f'rgb.png', fp=img)
-                    mbed = discord.Embed(
-                        title=f'Snap!',
-                        color=color
-                    )
-                    mbed.set_image(url=f'attachment://rgb.png')
-                    mbed.set_footer(text=f"Your pfp's RGB Graph | Syntax: p! rgb <image link>")
-                    await ctx.send(embed=mbed, file=file)
-                else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
-
     @swirl.error
     async def swirl_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -310,6 +267,22 @@ class manipulation(commands.Cog):
 
     ## IMAGE EDITING AND PROCESSING
 
+    @commands.command(aliases=['rgb', 'rgbgraph'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def getrgb(self, ctx, url: str):
+        async with self.ses.get(f'https://api.dagpi.xyz/image/rgb/?url={url}', headers={'Authorization': self.dag_token}) as r:
+            if r.status in range(200, 299):
+                img = BytesIO(await r.read())
+                file = discord.File(filename=f'rgb.png', fp=img)
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=f'attachment://rgb.png')
+                mbed.set_footer(text=f'RGB Graph | Requested by {ctx.author}')
+                await ctx.send(embed=mbed, file=file)
+            else:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
     @commands.command(aliases=['jpeg', 'jpegify'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -386,6 +359,32 @@ class manipulation(commands.Cog):
                 await ctx.send(embed=mbed, file=file)
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+
+    @getrgb.error
+    async def rgb_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            url = str(ctx.author.avatar_url_as(format='png'))
+            async with self.ses.get(f'https://api.dagpi.xyz/image/rgb/?url={url}', headers={'Authorization': self.dag_token}) as r:
+                if r.status in range(200, 299):
+                    img = BytesIO(await r.read())
+                    file = discord.File(filename=f'rgb.png', fp=img)
+                    mbed = discord.Embed(
+                        title=f'Snap!',
+                        color=color
+                    )
+                    mbed.set_image(url=f'attachment://rgb.png')
+                    mbed.set_footer(text=f"Your pfp's RGB Graph | Syntax: p! rgb <image link>")
+                    await ctx.send(embed=mbed, file=file)
+                else:
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
     @tojpeg.error
     async def jpeg_error(self, ctx, error):
