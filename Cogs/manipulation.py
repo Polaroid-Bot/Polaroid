@@ -272,6 +272,7 @@ class manipulation(commands.Cog):
 
 
     @commands.command(aliases=['jpeg', 'jpegify'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def tojpeg(self, ctx, url: str):
         async with self.ses.get(url) as r:
             if r.status in range(200, 299):
@@ -289,6 +290,7 @@ class manipulation(commands.Cog):
                 await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=err_color))
 
     @commands.command(aliases=['png', 'pngify'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def topng(self, ctx, url: str):
         async with self.ses.get(url) as r:
             if r.status in range(200, 299):
