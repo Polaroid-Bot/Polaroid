@@ -21,7 +21,7 @@ class help(commands.Cog):
         mbed.add_field(name='Images', value='> `p! help images`')
         mbed.add_field(name='Emojis', value='> `p! help emojis`')
         mbed.add_field(name='Extras', value='> `p! avatar <user>`\n> `p! help <subcommand>`')
-        mbed.add_field(name='Any Questions?', value=f'[Documentation](https://github.com/polaroid-bot/polaroid)\n[Discord](https://dsc.gg/plrd)')
+        mbed.add_field(name='Any Questions?', value=f'> [Documentation](https://github.com/polaroid-bot/polaroid)\n> [Discord](https://dsc.gg/plrd)')
         mbed.set_footer(text='Note that many of these commands do not support gifs and webp images.')
         await ctx.send(embed=mbed)
 
