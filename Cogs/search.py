@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 import random
 
+err_color = discord.Color.red()
 color = 0x0da2ff
 
 class search(commands.Cog):
