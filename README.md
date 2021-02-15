@@ -1,4 +1,6 @@
 # Polaroid | [Documentation](https://github.com/Polaroid-Bot/Polaroid/blob/master/Docs.md)
+![BG](https://cdn.discordapp.com/attachments/690199792059416586/753443895987404810/image0.png)
+
 Opensource Image manipulation Discord Bot made with API's
 
 ## Suggest Or Report a Bug
