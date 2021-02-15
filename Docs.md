@@ -20,6 +20,6 @@
 	* p! rotate <imag url> <degrees>
 * Emoji Related
 	* p! delemoji <emoji>
-  * p! cremoji <image url> <emoji name>
+  	* p! cremoji <image url> <emoji name>
 * Info Related
 	* p! help
