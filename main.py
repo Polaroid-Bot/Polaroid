@@ -10,7 +10,7 @@ load_dotenv()
 
 colors = [0xe3a2fc, 0x0da2ff]
 token = os.getenv("TOKEN")
-intents = discord.Intents.default()
+intents = discord.Intents.members()
 client = commands.AutoShardedBot(command_prefix=commands.when_mentioned_or('p! '), help_command=None, intents=intents, case_insensitive=True)
 
 client.aiohttp_session = aiohttp.ClientSession()
