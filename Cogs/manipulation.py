@@ -6,9 +6,9 @@ from PIL import Image
 import os
 from asyncdagpi import Client, ImageFeatures
 
-
 err_color = discord.Color.red()
 color = 0x0da2ff
+
 
 class manipulation(commands.Cog):
     def __init__(self, bot):
@@ -19,7 +19,6 @@ class manipulation(commands.Cog):
         self.deep_ai = os.getenv("DEEP_AI")
 
     ## FUN COMMANDS
-
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -208,7 +207,6 @@ class manipulation(commands.Cog):
                 except:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
-
     @triggered.error
     async def triggered_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -240,7 +238,6 @@ class manipulation(commands.Cog):
                 except:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
-
     @wasted.error
     async def w_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
@@ -271,7 +268,6 @@ class manipulation(commands.Cog):
                 except:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
-
     ## IMAGE EDITING AND MACHNE LEARNING
 
     @commands.command(aliases=['addcol', 'recolor'])
@@ -292,6 +288,7 @@ class manipulation(commands.Cog):
                     color=color
                 )
                 mbed.set_image(url=data['output_url'])
+                mbed.set_footer(text='Machine Learning | Grayscale Re-colorization')
                 await ctx.send(embed=mbed)
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
@@ -383,7 +380,7 @@ class manipulation(commands.Cog):
                 b_im = b.getvalue()
                 file = discord.File(filename='rotated.png', fp=BytesIO(b_im))
                 mbed = discord.Embed(
-                    title = f'Snap! | Rotated the image by {degrees}° counter clockwise.',
+                    title=f'Snap! | Rotated the image by {degrees}° counter clockwise.',
                     color=color
                 )
                 mbed.set_image(url='attachment://rotated.png')
@@ -408,6 +405,7 @@ class manipulation(commands.Cog):
                 description='Syntax: `!addcol <grayscale image>`'
             )
             await ctx.send(embed=errembed)
+
     @getrgb.error
     async def rgb_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
