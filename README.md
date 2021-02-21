@@ -1,10 +1,17 @@
-# Polaroid
+# Polaroid | [Documentation](https://github.com/Polaroid-Bot/Polaroid/blob/master/Docs.md)
+![BG](https://cdn.discordapp.com/attachments/690199792059416586/753443895987404810/image0.png)
+
 Opensource Image manipulation Discord Bot made with API's
+
+## Suggest Or Report a Bug
+
+* [Support Server](https://discord.gg/HWNKQkw)
+* [Start a PR](https://github.com/Polaroid-Bot/Polaroid/pulls)
+* [Start an Issue](https://github.com/Polaroid-Bot/Polaroid/issues)
 
 ## Credits
 
 * [Python](https://github.com/python/cpython)
-
 * [Pillow](https://pillow.readthedocs.io/en/stable/)
 * [Dagpi API](https://asyncdagpi.readthedocs.io/en/latest/)
 * [Discord.py](https://discordpy.readthedocs.io/en/latest/)
