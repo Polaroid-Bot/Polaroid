@@ -10,14 +10,14 @@
 * Fun
 	* p! wasted <image url>
 	* p! swirl <image url>
-	* p! fiveguysonegirl <image url>
+	* p! fiveguysonegirl <guy> <girl> <- two image urls in this order
 	* p! magik <image url>
   * p! triggered <image url>
 * Image Editing
-	* p! rgbgraph <image url>
-	* p! jpegify/pngify <image url>
-	* p! resize <image url> <width> <height>
-	* p! rotate <imag url> <degrees>
+	* p! rgbgraph <image url> 
+	* p! jpegify/pngify <image url> 
+	* p! resize <image url> <width> <height> 
+	* p! rotate <image url> <degrees> 
 * Emoji Related
 	* p! delemoji <emoji>
   	* p! cremoji <image url> <emoji name>

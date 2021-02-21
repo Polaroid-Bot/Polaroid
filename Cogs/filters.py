@@ -127,7 +127,7 @@ class filters(commands.Cog):
         except:
             await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
 
-    @commands.command(aliases=['gryscl'])
+    @commands.command(aliases=['gryscl', 'grayscale'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def greyscale(self, ctx, url: str):
         http = 'https://', 'http://'
@@ -136,8 +136,8 @@ class filters(commands.Cog):
                 title='Snap!',
                 color=0x616161
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/greyscale?avatar={url}")
-            mbed.set_footer(text=f'Greyscale Filter | Requested by {ctx.author}')
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/color?color=#616161&avatar={url}")
+            mbed.set_footer(text=f'Grayscale Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
         else:
             await ctx.send(embed=discord.Embed(description='Please pass in a proper url.', color=color))

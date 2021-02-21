@@ -6,6 +6,7 @@ from PIL import Image
 import os
 from asyncdagpi import Client, ImageFeatures
 
+
 err_color = discord.Color.red()
 color = 0x0da2ff
 
@@ -15,8 +16,10 @@ class manipulation(commands.Cog):
         self.ses = bot.aiohttp_session
         self.dag_token = os.getenv("DAGPI")
         self.dagpi = Client(self.dag_token)
-    
+        self.deep_ai = os.getenv("DEEP_AI")
+
     ## FUN COMMANDS
+
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -269,7 +272,29 @@ class manipulation(commands.Cog):
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
 
 
-    ## IMAGE EDITING AND PROCESSING
+    ## IMAGE EDITING AND MACHNE LEARNING
+
+    @commands.command(aliases=['addcol', 'recolor'])
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def addcolor(self, ctx, url: str):
+        headers = {
+            'api-key': self.deep_ai
+        }
+        data = {
+            'image': f'{url}'
+        }
+        endpoint = 'https://api.deepai.org/api/colorizer'
+        async with self.ses.post(endpoint, headers=headers, data=data) as r:
+            if r.status in range(200, 299):
+                data = await r.json()
+                mbed = discord.Embed(
+                    title='Snap!',
+                    color=color
+                )
+                mbed.set_image(url=data['output_url'])
+                await ctx.send(embed=mbed)
+            else:
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
 
     @commands.command(aliases=['rgb', 'rgbgraph'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -366,6 +391,23 @@ class manipulation(commands.Cog):
             else:
                 await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
+    @addcolor.error
+    async def addcol_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            errembed = discord.Embed(
+                title='<:error:806618798768652318> Missing an argument',
+                color=err_color,
+                description='Syntax: `!addcol <grayscale image>`'
+            )
+            await ctx.send(embed=errembed)
     @getrgb.error
     async def rgb_error(self, ctx, error):
         if isinstance(error, commands.CommandOnCooldown):
