@@ -286,7 +286,7 @@ class manipulation(commands.Cog):
                 b_im = img.getvalue()
                 file = discord.File(filename=f'face.png', fp=BytesIO(b_im))
                 mbed = discord.Embed(
-                    title = f"Snap! | This is {user.mention}'s face.",
+                    title = f"Snap! | This is {user}'s face.",
                     color=color
                 )
                 mbed.set_image(url='attachment://face.png')
