@@ -282,16 +282,14 @@ class manipulation(commands.Cog):
         }
         async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
             if r.status in range(200, 299):
-                img = Image.open(BytesIO(await r.read()))
-                b = BytesIO()
-                img.save(b, f'{img.format}'.upper())
-                b_im = b.getvalue()
-                file = discord.File(filename=f'face.{img.format}', fp=BytesIO(b_im))
+                img = BytesIO(await r.read())
+                b_im = img.getvalue()
+                file = discord.File(filename=f'face.png', fp=BytesIO(b_im))
                 mbed = discord.Embed(
                     title = f"Snap! | This is {user.mention}'s face.",
                     color=color
                 )
-                mbed.set_image(url='attachment://face.PNG')
+                mbed.set_image(url='attachment://face.png')
                 mbed.set_footer(text='This person does not exist')
                 await ctx.send(embed=mbed, file=file)
             else:
@@ -382,11 +380,9 @@ class manipulation(commands.Cog):
     async def resize(self, ctx, url: str, width: int, height: int):
         async with self.ses.get(url) as r:
             if r.status in range(200, 299):
-                im = Image.open(BytesIO(await r.read()), mode='r')
-                im_res = im.resize((width, height))
-                b = BytesIO()
-                im_res.save(b, 'PNG')
-                b_im = b.getvalue()
+                img = BytesIO(await r.read())
+                b_im = img.getvalue()
+                file = discord.File(filename=f'face.png', fp=BytesIO(b_im))
                 file = discord.File(filename='resized.png', fp=BytesIO(b_im))
                 mbed = discord.Embed(
                     title=f'Snap! | Image resized to {width}x{height}',
