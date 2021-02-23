@@ -291,8 +291,9 @@ class manipulation(commands.Cog):
                     title = f"Snap! | This is {user.mention}'s face.",
                     color=color
                 )
+                mbed.set_image(url='attachment://face.png')
                 mbed.set_footer(text='This person does not exist')
-                await ctx.send(file=file)
+                await ctx.send(embed=mbed, file=file)
             else:
                 await ctx.send(f'{r.status}')
 
@@ -461,7 +462,8 @@ class manipulation(commands.Cog):
                         color=color
                     )
                     mbed.set_footer(text='This person does not exist | Syntax: p! face <user>')
-                    await ctx.send(file=file)
+                    mbed.set_image(url='attachment://face.png')
+                    await ctx.send(embed=mbed, file=file)
                 else:
                     await ctx.send(f'{r.status}')  
 
