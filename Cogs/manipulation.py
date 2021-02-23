@@ -17,8 +17,9 @@ class manipulation(commands.Cog):
         self.dag_token = os.getenv("DAGPI")
         self.dagpi = Client(self.dag_token)
         self.deep_ai = os.getenv("DEEP_AI")
+        self.radi_api = os.getenv("RADI_API")
 
-    ## FUN COMMANDS
+    ## PURELY FUN COMMANDS
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -270,6 +271,33 @@ class manipulation(commands.Cog):
 
     ## IMAGE EDITING AND MACHNE LEARNING
 
+
+    @commands.command()
+    @commands.cooldown(rate=2, per=3, type=BucketType.user)
+    async def face(self, ctx, user: discord.Member):
+        headers = {
+            "x-rapidapi-key": self.radi_api,
+            "x-rapidapi-host": "face-generator.p.rapidapi.com",
+            "useQueryString": "true"
+        }
+        async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
+            if r.status in range(200, 299):
+                img = Image.open(BytesIO(await r.read()))
+                b = BytesIO()
+                img.save(b, f'{img.format}'.upper())
+                b_im = b.getvalue()
+                file = discord.File(filename=f'face.{img.format}', fp=BytesIO(b_im))
+                mbed = discord.Embed(
+                    title = f"Snap! | This is {user.mention}'s face.",
+                    color=color
+                )
+                mbed.set_image(url='attachment://face.png')
+                mbed.set_footer(text='This person does not exist')
+                await ctx.send(embed=mbed, file=file)
+            else:
+                await ctx.send(f'{r.status}')
+
+
     @commands.command(aliases=['addcol', 'recolor'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
     async def addcolor(self, ctx, url: str):
@@ -405,6 +433,39 @@ class manipulation(commands.Cog):
                 description='Syntax: `!addcol <grayscale image>`'
             )
             await ctx.send(embed=errembed)
+
+    @face.error
+    async def face_error(self, ctx, error):
+        if isinstance(error, commands.CommandOnCooldown):
+            errembed = discord.Embed(
+                title='Hold on there, buddy',
+                color=err_color,
+                description='Wait 3 more seconds before you can get another snap!'
+            )
+            await ctx.send(embed=errembed)
+
+        elif isinstance(error, commands.MissingRequiredArgument):
+            headers = {
+                "x-rapidapi-key": self.radi_api,
+                "x-rapidapi-host": "face-generator.p.rapidapi.com",
+                "useQueryString": "true"
+            }
+            async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
+                if r.status in range(200, 299):
+                    img = Image.open(BytesIO(await r.read()))
+                    b = BytesIO()
+                    img.save(b, f'{img.format}'.upper())
+                    b_im = b.getvalue()
+                    file = discord.File(filename=f'face.{img.format}', fp=BytesIO(b_im))
+                    mbed = discord.Embed(
+                        title = f"Snap! | This is your face.",
+                        color=color
+                    )
+                    mbed.set_footer(text='This person does not exist | Syntax: p! face <user>')
+                    mbed.set_image(url='attachment://face.png')
+                    await ctx.send(embed=mbed, file=file)
+                else:
+                    await ctx.send(f'{r.status}')  
 
     @getrgb.error
     async def rgb_error(self, ctx, error):
