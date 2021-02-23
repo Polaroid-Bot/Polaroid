@@ -278,7 +278,7 @@ class manipulation(commands.Cog):
         headers = {
             "x-rapidapi-key": self.radi_api,
             "x-rapidapi-host": "face-generator.p.rapidapi.com",
-            "useQueryString": true
+            "useQueryString": "true"
         }
         async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
             if r.status in range(200, 299):
@@ -449,7 +449,7 @@ class manipulation(commands.Cog):
             headers = {
                 "x-rapidapi-key": self.radi_api,
                 "x-rapidapi-host": "face-generator.p.rapidapi.com",
-                "useQueryString": true
+                "useQueryString": "true"
             }
             async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
                 if r.status in range(200, 299):
