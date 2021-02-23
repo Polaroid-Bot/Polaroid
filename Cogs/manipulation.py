@@ -291,11 +291,12 @@ class manipulation(commands.Cog):
                     title = f"Snap! | This is {user.mention}'s face.",
                     color=color
                 )
-                mbed.set_image(url='attachment://face.png')
+                mbed.set_image(url='attachment://face.PNG')
                 mbed.set_footer(text='This person does not exist')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(f'{r.status}')
+                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Response: {r.status}', color=color))
+
 
 
     @commands.command(aliases=['addcol', 'recolor'])
@@ -462,10 +463,10 @@ class manipulation(commands.Cog):
                         color=color
                     )
                     mbed.set_footer(text='This person does not exist | Syntax: p! face <user>')
-                    mbed.set_image(url='attachment://face.png')
+                    mbed.set_image(url='attachment://face.PNG')
                     await ctx.send(embed=mbed, file=file)
                 else:
-                    await ctx.send(f'{r.status}')  
+                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Response: {r.status}', color=color)) 
 
     @getrgb.error
     async def rgb_error(self, ctx, error):
