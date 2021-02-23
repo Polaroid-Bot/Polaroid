@@ -449,17 +449,15 @@ class manipulation(commands.Cog):
             }
             async with self.ses.get("https://face-generator.p.rapidapi.com/faces/random", headers=headers) as r:
                 if r.status in range(200, 299):
-                    img = Image.open(BytesIO(await r.read()))
-                    b = BytesIO()
-                    img.save(b, f'{img.format}'.upper())
-                    b_im = b.getvalue()
-                    file = discord.File(filename=f'face.{img.format}', fp=BytesIO(b_im))
+                    img = BytesIO(await r.read())
+                    b_im = img.getvalue()
+                    file = discord.File(filename=f'face.png', fp=BytesIO(b_im))
                     mbed = discord.Embed(
                         title = f"Snap! | This is your face.",
                         color=color
                     )
                     mbed.set_footer(text='This person does not exist | Syntax: p! face <user>')
-                    mbed.set_image(url='attachment://face.PNG')
+                    mbed.set_image(url='attachment://face.png')
                     await ctx.send(embed=mbed, file=file)
                 else:
                     await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Response: {r.status}', color=color)) 
