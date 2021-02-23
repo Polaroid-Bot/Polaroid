@@ -136,7 +136,7 @@ class filters(commands.Cog):
                 title='Snap!',
                 color=0x616161
             )
-            mbed.set_image(url=f"https://some-random-api.ml/canvas/color?color=#616161&avatar={url}")
+            mbed.set_image(url=f"https://some-random-api.ml/canvas/color?color=#808080&avatar={url}")
             mbed.set_footer(text=f'Grayscale Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed)
         else:

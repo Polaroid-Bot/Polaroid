@@ -8,12 +8,14 @@
 ## Image Commands
 
 * Fun
+	* p! face <user> <- generates a face from scatch that will be claimed to be the mentioned user.
 	* p! wasted <image url>
 	* p! swirl <image url>
-	* p! fiveguysonegirl <guy> <girl> <- two image urls in this order
+	* p! fiveguysonegirl <guy> <girl> <- two image urls in this order.
 	* p! magik <image url>
   * p! triggered <image url>
 * Image Editing
+	* p! addcolor <image url> <- adds color to a greyscale image.
 	* p! rgbgraph <image url> 
 	* p! jpegify/pngify <image url> 
 	* p! resize <image url> <width> <height> 
