@@ -34,7 +34,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"polaroid.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @commands.command(aliases=['poster'])
     async def posterize(self, ctx, url: str):
@@ -49,7 +49,7 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Posterized | Requested by {ctx.author} ')
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -71,9 +71,9 @@ class filters(commands.Cog):
                     mbed.set_footer(text=f'Blur Filter | Requested by {ctx.author}')
                     await ctx.send(embed=mbed, file=file)
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
             except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/is a Gif.', color=color))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> File size may be too big/is a Gif.', color=color))
 
     @commands.command(aliases=['blurpify', 'blurple'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -83,7 +83,7 @@ class filters(commands.Cog):
                 data = await r.json()
                 url = data['message']
                 mbed = discord.Embed(
-                    title='Snap',
+                    title='Snap!',
                     color=color
                 )
                 mbed.set_image(url=url)
@@ -92,7 +92,7 @@ class filters(commands.Cog):
             else:
                 data = await r.json()
                 msg = data['message']
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
 
     @commands.command(aliases=['rb'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -108,7 +108,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"rainbow.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file.', color=color))
 
 
     @commands.command(aliases=['in'])
@@ -125,7 +125,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"inverted.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file.', color=color))
 
     @commands.command(aliases=['gryscl', 'grayscale'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -156,7 +156,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"sepia.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request | Image may be a WEBP file.', color=color))
 
     @commands.command(aliases=['shatter'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -172,7 +172,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"shattered.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file.', color=color))
 
     @commands.command(aliases=['oil'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -188,7 +188,7 @@ class filters(commands.Cog):
             file = discord.File(fp=img.image, filename=f"oil.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file.', color=color))
 
     @commands.command(aliases=['pixelify', 'pixel'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -204,7 +204,7 @@ class filters(commands.Cog):
             mbed.set_footer(text=f'Pixelated Filter | Requested by {ctx.author}')
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file.', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file.', color=color))
 
 
     @snap.error
@@ -237,7 +237,7 @@ class filters(commands.Cog):
                 file = discord.File(fp=img.image, filename=f"polaroid.{img.format}")
                 await ctx.send(embed=mbed, file=file)
             except:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
 
     @pixelate.error
@@ -270,7 +270,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text='Syntax: p! pixel <image link> | Quality may be bad. Specify url if this is the case.')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error when making request.', color=color))
 
 
     @posterize.error
@@ -303,7 +303,7 @@ class filters(commands.Cog):
                     file = discord.File(fp=img.image, filename=f"posterized.{img.format}")
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @oilify.error
     async def oil_error(self, ctx, error):
@@ -335,7 +335,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text='Syntax: p! oil <image link> | Quality may be bad. Specify url if this is the case.')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error when making request.', color=color))
 
 
     @blur.error
@@ -374,9 +374,9 @@ class filters(commands.Cog):
                             mbed.set_footer(text=f'Syntax: p! blur <image link> | Requested by {ctx.author}')
                             await ctx.send(embed=mbed, file=file)
                         else:
-                            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
                     except:
-                        await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> File size may be too big/pfp is a Gif.', color=color))
+                        await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> File size may be too big/pfp is a Gif.', color=color))
 
     @invert.error
     async def invert_error(self, ctx, error):
@@ -408,7 +408,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text='Syntax: p! inverted <image link> | Quality may not be good. Specify url if this is the case.')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @glass.error
     async def glass_error(self, ctx, error):
@@ -440,7 +440,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text=f'Shattered Glass Filter | Requested by {ctx.author}')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @sepia.error
     async def sep_error(self, ctx, error):
@@ -472,7 +472,7 @@ class filters(commands.Cog):
                     file = discord.File(fp=img.image, filename=f"sepia.{img.format}")
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @greyscale.error
     async def gryscl_error(self, ctx, error):
@@ -531,7 +531,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text='Syntax: p! in <image link>')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
 
     @rainbow.error
@@ -564,7 +564,7 @@ class filters(commands.Cog):
                     mbed.set_footer(text='Syntax: p! rb <image link>')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
 
     @blurp.error
@@ -600,7 +600,7 @@ class filters(commands.Cog):
                 else:
                     data = await r.json()
                     msg = data['message']
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Your pfp may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Your pfp may be a gif. | Resonse: {r.status} -> {msg}.', color=color))
 
 
 

@@ -3,6 +3,7 @@ from io import BytesIO
 import discord
 from discord.ext import commands
 from discord.ext.commands import BucketType
+from PIL import Image
 
 color = 0x0da2ff
 
@@ -23,11 +24,17 @@ class emojis(commands.Cog):
                         img = BytesIO(await r.read())
                         b_im = img.getvalue()
                         emoji = await guild.create_custom_emoji(image=b_im, name=name)
-                        await ctx.send(embed=discord.Embed(description=f'Successfully Created Emoji: <:{name}:{emoji.id}>', color=color))
+                        pil_img = Image.open(img, mode='r')
+                        try:
+                           pil_img.seek(1) 
+                        except EOFError:
+                            await ctx.send(embed=discord.Embed(description=f'Successfully Created Emoji: <:{name}:{emoji.id}>', color=color))
+                        else:
+                            await ctx.send(embed=discord.Embed(description=f'Successfully Created Emoji: <a:{name}:{emoji.id}>', color=color))
                     else:
-                        await ctx.send(discord.Embed(description='<:error:806619029044723722> Error when making request. | File size is too big', color=color))
+                        await ctx.send(discord.Embed(description='<:error:866754763482726461> Error when making request. | File size is too big', color=color))
                 except discord.HTTPException:
-                    await ctx.send(embed=discord.Embed(description='<:error:806619029044723722> File size is too big.', color=color))
+                    await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> File size is too big.', color=color))
 
     @commands.command(aliases=['de', 'drem'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
