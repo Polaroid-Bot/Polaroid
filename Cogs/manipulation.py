@@ -50,7 +50,7 @@ class manipulation(commands.Cog):
             file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     @commands.command(aliases=['fiveguysonegirl', '5g1g'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -70,9 +70,9 @@ class manipulation(commands.Cog):
                 mbed.set_footer(text=f'Five Guys One Girl | Requested by {ctx.author}')
                 await ctx.send(embed=mbed, file=file)
             elif r.status == 415:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Url is not supported.'))
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:866754763482726461> Problem while snapping! | Response: {r.status}.', color=color))
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -88,7 +88,7 @@ class manipulation(commands.Cog):
             file = discord.File(fp=img.image, filename=f"magik.{img.format}")
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     @commands.command()
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -104,7 +104,7 @@ class manipulation(commands.Cog):
             mbed.set_footer(text=f'Triggered | Requested by {ctx.author}')
             await ctx.send(embed=mbed, file=file)
         except:
-            await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+            await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     @magik.error
     async def magik_error(self, ctx, error):
@@ -136,7 +136,7 @@ class manipulation(commands.Cog):
                     file = discord.File(fp=img.image, filename=f"magik.{img.format}")
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request.', color=color))
 
     @fiveg1g.error
     async def fiveg1g_error(self, ctx, error):
@@ -172,9 +172,9 @@ class manipulation(commands.Cog):
                         mbed.set_footer(text=f'Five Of You, One Of You | Syntax: p! 5g1g <guy> <girl>')
                         await ctx.send(embed=mbed, file=file)
                     elif r.status == 415:
-                        await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
+                        await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Url is not supported.'))
                     else:
-                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+                        await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! | Response: {r.status}.', color=color))
 
     @swirl.error
     async def swirl_error(self, ctx, error):
@@ -206,7 +206,7 @@ class manipulation(commands.Cog):
                     file = discord.File(fp=img.image, filename=f"swirled.{img.format}")
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     @triggered.error
     async def triggered_error(self, ctx, error):
@@ -237,7 +237,7 @@ class manipulation(commands.Cog):
                     mbed.set_footer(text='Syntax: p! triggered <image link> | Quality may not be good. Specify url if this is the case.')
                     await ctx.send(embed=mbed, file=file)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     @wasted.error
     async def w_error(self, ctx, error):
@@ -267,7 +267,7 @@ class manipulation(commands.Cog):
                     mbed.set_footer(text=f'Wasted | Requested by {ctx.author}')
                     await ctx.send(embed=mbed)
                 except:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Image may be a WEBP file', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Image may be a WEBP file', color=color))
 
     ## IMAGE EDITING AND MACHNE LEARNING
 
@@ -293,7 +293,7 @@ class manipulation(commands.Cog):
                 mbed.set_footer(text='This person does not exist')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Response: {r.status}', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Response: {r.status}', color=color))
 
 
 
@@ -318,7 +318,7 @@ class manipulation(commands.Cog):
                 mbed.set_footer(text='Machine Learning | Grayscale Re-colorization')
                 await ctx.send(embed=mbed)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! | Response: {r.status}.', color=color))
 
     @commands.command(aliases=['rgb', 'rgbgraph'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -335,9 +335,9 @@ class manipulation(commands.Cog):
                 mbed.set_footer(text=f'RGB Graph | Requested by {ctx.author}')
                 await ctx.send(embed=mbed, file=file)
             elif r.status == 415:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Url is not supported.'))
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! | Response: {r.status}.', color=color))
 
     @commands.command(aliases=['jpeg', 'jpegify'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -355,7 +355,7 @@ class manipulation(commands.Cog):
                 mbed.set_image(url='attachment://tojpeg.jpeg')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=err_color))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error when making request.', color=err_color))
 
     @commands.command(aliases=['png', 'pngify'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -373,7 +373,7 @@ class manipulation(commands.Cog):
                 mbed.set_image(url='attachment://topng.png')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error when making request.', color=err_color))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error when making request.', color=err_color))
 
     @commands.group(aliases=['rs'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -391,7 +391,7 @@ class manipulation(commands.Cog):
                 mbed.set_image(url='attachment://resized.png')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
     @commands.command(aliases=['rtt'])
     @commands.cooldown(rate=2, per=3, type=BucketType.user)
@@ -411,7 +411,7 @@ class manipulation(commands.Cog):
                 mbed.set_image(url='attachment://rotated.png')
                 await ctx.send(embed=mbed, file=file)
             else:
-                await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
     @addcolor.error
     async def addcol_error(self, ctx, error):
@@ -425,7 +425,7 @@ class manipulation(commands.Cog):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             errembed = discord.Embed(
-                title='<:error:806618798768652318> Missing an argument',
+                title='<:error:866754763482726461> Missing an argument',
                 color=err_color,
                 description='Syntax: `!addcol <grayscale image>`'
             )
@@ -460,7 +460,7 @@ class manipulation(commands.Cog):
                     mbed.set_image(url='attachment://face.png')
                     await ctx.send(embed=mbed, file=file)
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Error when making request. | Response: {r.status}', color=color)) 
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Error when making request. | Response: {r.status}', color=color)) 
 
     @getrgb.error
     async def rgb_error(self, ctx, error):
@@ -486,9 +486,9 @@ class manipulation(commands.Cog):
                     mbed.set_footer(text=f"Your pfp's RGB Graph | Syntax: p! rgb <image link>")
                     await ctx.send(embed=mbed, file=file)
                 elif r.status == 415:
-                    await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Url is not supported.'))
+                    await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Url is not supported.'))
                 else:
-                    await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! | Response: {r.status}.', color=color))
+                    await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! | Response: {r.status}.', color=color))
 
     @tojpeg.error
     async def jpeg_error(self, ctx, error):
@@ -510,7 +510,7 @@ class manipulation(commands.Cog):
                 mbed.set_footer('Syntax: p! tojpeg <image link>')
                 await ctx.send(embed=mbed)
             except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error during conversion process.', color=err_color))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error during conversion process.', color=err_color))
 
     @topng.error
     async def png_error(self, ctx, error):
@@ -532,7 +532,7 @@ class manipulation(commands.Cog):
                 mbed.set_footer('Syntax: p! topng <image link>')
                 await ctx.send(embed=mbed)
             except:
-                await ctx.send(embed=discord.Embed(description='<:error:806618798768652318> Error during conversion process.', color=err_color))
+                await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error during conversion process.', color=err_color))
 
     @rotate.error
     async def rtt_error(self, ctx, error):
@@ -569,7 +569,7 @@ class manipulation(commands.Cog):
                         mbed.set_footer(text='Syntax: p! rtt <image link> <degrees>')
                         await ctx.send(embed=mbed, file=file)
                     else:
-                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                        await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
     @resize.error
     async def rs_error(self, ctx, error):
@@ -605,7 +605,7 @@ class manipulation(commands.Cog):
                         mbed.set_image(url='attachment://resized.png')
                         await ctx.send(embed=mbed, file=file)
                     else:
-                        await ctx.send(embed=discord.Embed(description=f'<:error:806618798768652318> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
+                        await ctx.send(embed=discord.Embed(description=f'<:error:866754763482726461> Problem while snapping! Image may be a gif. | {r.status} response.', color=color))
 
 
 def setup(bot):
