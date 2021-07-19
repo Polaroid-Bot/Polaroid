@@ -4,3 +4,5 @@ pillow
 aiohttp
 aiofile
 asyncdagpi
+dblpy
+discordlists.py
