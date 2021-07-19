@@ -32,7 +32,7 @@ class emojis(commands.Cog):
                         else:
                             await ctx.send(embed=discord.Embed(description=f'Successfully Created Emoji: <a:{name}:{emoji.id}>', color=color))
                     else:
-                        await ctx.send(discord.Embed(description='<:error:866754763482726461> Error when making request. | File size is too big', color=color))
+                        await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> Error when making request. | File size is too big', color=color))
                 except discord.HTTPException:
                     await ctx.send(embed=discord.Embed(description='<:error:866754763482726461> File size is too big.', color=color))
 
